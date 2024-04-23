@@ -89,11 +89,11 @@ class StatementController extends GetxController {
     //     .buffer
     //     .asUint8List();
     pw.Document pdf = type == "DEPOSIT"
-        ? DepositStatement.createStatement(selectedAccount.value, transactions,
-            fromDate.value, toDate.value, accBalance)
+        ? await DepositStatement.createStatement(selectedAccount.value,
+            transactions, fromDate.value, toDate.value, accBalance)
         : type == "LOAN"
-            ? LoanStatement.createStatement(selectedAccount.value, transactions,
-                fromDate.value, toDate.value, accBalance)
+            ? await LoanStatement.createStatement(selectedAccount.value,
+                transactions, fromDate.value, toDate.value, accBalance)
             : pw.Document();
 
     var fileName =

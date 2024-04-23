@@ -121,6 +121,11 @@ class HomeController extends GetxController {
       "color": 0xff6AE7CF
     },
     {"title": "Events", "image": "assets/ui/events.png", "color": 0xffcc82f1},
+    {
+      "title": "Fixed Deposit Calculator",
+      "image": "assets/ui/deposits.png",
+      "color": 0xff6AE7CF
+    },
   ].obs;
 
   RxString selectedService = "Deposit".obs;
@@ -170,6 +175,9 @@ class HomeController extends GetxController {
       case "EMI Calculator":
         Get.toNamed(Routes.EMI_CALCI);
         break;
+      case "Fixed Deposit Calculator":
+        Get.toNamed(Routes.FD_CALCI);
+        break;
       default:
     }
   }
@@ -197,4 +205,9 @@ class HomeController extends GetxController {
         .toPrecision(2)
         .toString();
   }
+
+  //FD Calculator
+  RxString customerType = "Normal".obs;
+  RxString tenureType = "YY/MM/DD".obs;
+  RxDouble fdAmount = 5000.0.obs;
 }

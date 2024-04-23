@@ -30,4 +30,5 @@ class Routes {
   static const LOCKER = '/locker';
   static const LOCKER_DETAILS = '/locker_details';
   static const EMI_CALCI = '/emi_calculator';
+  static const FD_CALCI = '/fd_calculator';
 }
