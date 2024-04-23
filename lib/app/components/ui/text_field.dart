@@ -14,6 +14,9 @@ class MyTextField extends StatelessWidget {
   final bool? showLine;
   final Function(String value)? onChanged;
   final Function(String value)? onSubmit;
+  final String? Function(String? value)? validator;
+  final int? maxLines;
+  final bool? readOnly;
   const MyTextField({
     super.key,
     this.textColor,
@@ -26,6 +29,9 @@ class MyTextField extends StatelessWidget {
     this.keyboardType,
     this.onChanged,
     this.onSubmit,
+    this.validator,
+    this.maxLines,
+    this.readOnly,
   });
 
   @override
@@ -36,6 +42,9 @@ class MyTextField extends StatelessWidget {
     return TextFormField(
       key: Key(initialValue ?? ""),
       onChanged: onChanged,
+      maxLines: maxLines,
+      readOnly: readOnly ?? false,
+      validator: validator,
       onFieldSubmitted: onSubmit,
       initialValue: initialValue ?? "",
       keyboardType: keyboardType,

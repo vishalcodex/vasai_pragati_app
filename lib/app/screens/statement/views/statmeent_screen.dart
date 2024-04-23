@@ -345,8 +345,12 @@ class StatementScreen extends GetView<StatementController> {
                                                               height: 5 * fem,
                                                             ),
                                                             TextView(
-                                                              text: e
-                                                                  .shNarration!,
+                                                              text: (((e.nARRATION ??
+                                                                              "") ==
+                                                                          "")
+                                                                      ? e.shNarration
+                                                                      : e.nARRATION)
+                                                                  .toString(),
                                                               color:
                                                                   ColorPallete
                                                                       .grey,

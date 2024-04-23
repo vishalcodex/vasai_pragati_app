@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../common/color_pallete.dart';
@@ -130,6 +131,55 @@ class MultipleAccountsScreen extends GetView<DepositController> {
               SizedBox(
                 height: 10 * fem,
               ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CircleAvatar(
+                            radius: 5,
+                            backgroundColor: ColorPallete.red.withOpacity(0.2),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          const TextView(
+                            text: "Matured Fixed Deposit",
+                            color: ColorPallete.secondary,
+                            fontSize: 12,
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CircleAvatar(
+                            radius: 5,
+                            backgroundColor: Colors.green.withOpacity(0.5),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          const TextView(
+                            text: "Maturity Date is near",
+                            color: ColorPallete.secondary,
+                            fontSize: 12,
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+
               Expanded(
                 child: Obx(
                   () => controller.accounts.isEmpty
@@ -188,159 +238,185 @@ class MultipleAccountsScreen extends GetView<DepositController> {
                                             child: RoundedContainer(
                                               radius: 10,
                                               color: ColorPallete.theme,
+                                              clip: Clip.antiAliasWithSaveLayer,
                                               borderColor:
                                                   Colors.grey.withOpacity(0.2),
-                                              child: Padding(
-                                                padding:
-                                                    EdgeInsets.all(15.0 * fem),
-                                                child: Column(
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        const TextView(
-                                                          text:
-                                                              "Account No. : ",
-                                                          color: ColorPallete
-                                                              .secondary,
-                                                          fontSize: 16,
-                                                        ),
-                                                        TextView(
-                                                          text: element
-                                                              .fdMaster!
-                                                              .accountId!
-                                                              .capitalize!,
-                                                          color: ColorPallete
-                                                              .primary,
-                                                          fontSize: 16,
-                                                        ),
-                                                        const Spacer(),
-                                                      ],
-                                                    ),
-                                                    SizedBox(
-                                                      height: 5 * fem,
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        const TextView(
-                                                          text:
-                                                              "Account Name : ",
-                                                          color: ColorPallete
-                                                              .secondary,
-                                                          fontSize: 16,
-                                                        ),
-                                                        TextView(
-                                                          text: element
-                                                              .accountName!
-                                                              .capitalize!,
-                                                          color: ColorPallete
-                                                              .primary,
-                                                          fontSize: 16,
-                                                        ),
-                                                        const Spacer(),
-                                                      ],
-                                                    ),
-                                                    SizedBox(
-                                                      height: 5 * fem,
-                                                    ),
-                                                    // Row(
-                                                    //   children: [
-                                                    //     const TextView(
-                                                    //       text:
-                                                    //           "Maturity Date : ",
-                                                    //       color: ColorPallete
-                                                    //           .secondary,
-                                                    //       fontSize: 16,
-                                                    //     ),
-                                                    //     TextView(
-                                                    //       text: controller.formatDate(
-                                                    //           element.fdMaster!
-                                                    //               .dateMatur!,
-                                                    //           format:
-                                                    //               "yyyy-MM-dd"),
-                                                    //       color: ColorPallete
-                                                    //           .primary,
-                                                    //       fontSize: 16,
-                                                    //     ),
-                                                    //     const Spacer(),
-                                                    //   ],
-                                                    // ),
-                                                    // SizedBox(
-                                                    //   height: 5 * fem,
-                                                    // ),
-                                                    Row(
-                                                      children: [
-                                                        const TextView(
-                                                          text:
-                                                              "Maturity Amount : ",
-                                                          color: ColorPallete
-                                                              .secondary,
-                                                          fontSize: 16,
-                                                        ),
-                                                        TextView(
-                                                          text:
-                                                              "₹ ${element.fdMaster!.maturAmt!}/-",
-                                                          color: ColorPallete
-                                                              .primary,
-                                                          fontSize: 16,
-                                                        ),
-                                                        const Spacer(),
-                                                      ],
-                                                    ),
-                                                    SizedBox(
-                                                      height: 10 * fem,
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        const Spacer(),
-                                                        InkWell(
-                                                          onTap: () {
-                                                            // controller
-                                                            //     .onFDAccountSelected(
-                                                            //         element);
-
-                                                            showDialog(
-                                                              context: context,
-                                                              builder:
-                                                                  (context) {
-                                                                return FixedDepositDetailsAlert(
-                                                                  account:
-                                                                      element,
-                                                                );
-                                                              },
-                                                            );
-                                                          },
-                                                          child:
-                                                              RoundedContainer(
-                                                            radius: 10,
+                                              child: Container(
+                                                color: DateFormat("yyyy-MM-dd")
+                                                            .parse(element
+                                                                .fdMaster!
+                                                                .dateMatur!)
+                                                            .difference(
+                                                                DateTime.now())
+                                                            .inDays <
+                                                        0
+                                                    ? ColorPallete.red
+                                                        .withOpacity(0.2)
+                                                    : DateFormat("yyyy-MM-dd")
+                                                                .parse(element
+                                                                    .fdMaster!
+                                                                    .dateMatur!)
+                                                                .difference(
+                                                                    DateTime
+                                                                        .now())
+                                                                .inDays <=
+                                                            30
+                                                        ? Colors.green
+                                                            .withOpacity(0.5)
+                                                        : ColorPallete.theme,
+                                                child: Padding(
+                                                  padding: EdgeInsets.all(
+                                                      15.0 * fem),
+                                                  child: Column(
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          const TextView(
+                                                            text:
+                                                                "Account No. : ",
+                                                            color: ColorPallete
+                                                                .secondary,
+                                                            fontSize: 16,
+                                                          ),
+                                                          TextView(
+                                                            text: element
+                                                                .fdMaster!
+                                                                .accountId!
+                                                                .capitalize!,
                                                             color: ColorPallete
                                                                 .primary,
-                                                            child: Padding(
-                                                              padding: EdgeInsets
-                                                                  .symmetric(
-                                                                      horizontal:
-                                                                          15.0 *
-                                                                              fem,
-                                                                      vertical:
-                                                                          10 *
-                                                                              fem),
-                                                              child:
-                                                                  const TextView(
-                                                                text:
-                                                                    "View More",
-                                                                color:
-                                                                    ColorPallete
-                                                                        .theme,
-                                                                fontSize: 14,
-                                                                weight:
-                                                                    FontWeight
-                                                                        .bold,
+                                                            fontSize: 16,
+                                                          ),
+                                                          const Spacer(),
+                                                        ],
+                                                      ),
+                                                      SizedBox(
+                                                        height: 5 * fem,
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          const TextView(
+                                                            text:
+                                                                "Account Name : ",
+                                                            color: ColorPallete
+                                                                .secondary,
+                                                            fontSize: 16,
+                                                          ),
+                                                          TextView(
+                                                            text: element
+                                                                .accountName!
+                                                                .capitalize!,
+                                                            color: ColorPallete
+                                                                .primary,
+                                                            fontSize: 16,
+                                                          ),
+                                                          const Spacer(),
+                                                        ],
+                                                      ),
+                                                      SizedBox(
+                                                        height: 5 * fem,
+                                                      ),
+                                                      // Row(
+                                                      //   children: [
+                                                      //     const TextView(
+                                                      //       text:
+                                                      //           "Maturity Date : ",
+                                                      //       color: ColorPallete
+                                                      //           .secondary,
+                                                      //       fontSize: 16,
+                                                      //     ),
+                                                      //     TextView(
+                                                      //       text: controller.formatDate(
+                                                      //           element.fdMaster!
+                                                      //               .dateMatur!,
+                                                      //           format:
+                                                      //               "yyyy-MM-dd"),
+                                                      //       color: ColorPallete
+                                                      //           .primary,
+                                                      //       fontSize: 16,
+                                                      //     ),
+                                                      //     const Spacer(),
+                                                      //   ],
+                                                      // ),
+                                                      // SizedBox(
+                                                      //   height: 5 * fem,
+                                                      // ),
+                                                      Row(
+                                                        children: [
+                                                          const TextView(
+                                                            text:
+                                                                "Maturity Amount : ",
+                                                            color: ColorPallete
+                                                                .secondary,
+                                                            fontSize: 16,
+                                                          ),
+                                                          TextView(
+                                                            text:
+                                                                "₹ ${element.fdMaster!.maturAmt!}/-",
+                                                            color: ColorPallete
+                                                                .primary,
+                                                            fontSize: 16,
+                                                          ),
+                                                          const Spacer(),
+                                                        ],
+                                                      ),
+                                                      SizedBox(
+                                                        height: 10 * fem,
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          const Spacer(),
+                                                          InkWell(
+                                                            onTap: () {
+                                                              // controller
+                                                              //     .onFDAccountSelected(
+                                                              //         element);
+
+                                                              showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) {
+                                                                  return FixedDepositDetailsAlert(
+                                                                    account:
+                                                                        element,
+                                                                  );
+                                                                },
+                                                              );
+                                                            },
+                                                            child:
+                                                                RoundedContainer(
+                                                              radius: 10,
+                                                              color:
+                                                                  ColorPallete
+                                                                      .primary,
+                                                              child: Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal:
+                                                                        15.0 *
+                                                                            fem,
+                                                                    vertical:
+                                                                        10 *
+                                                                            fem),
+                                                                child:
+                                                                    const TextView(
+                                                                  text:
+                                                                      "View More",
+                                                                  color:
+                                                                      ColorPallete
+                                                                          .theme,
+                                                                  fontSize: 14,
+                                                                  weight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
                                                               ),
                                                             ),
                                                           ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ),

@@ -55,9 +55,11 @@ class FixedDepositDetailsAlert extends StatelessWidget {
               DetailEntryWidget(
                   title: "Rate Of Interest",
                   value: "${account.fdMaster!.intRate!}%"),
+              // DetailEntryWidget(
+              //     title: "Provision Amount",
+              //     value: "₹ ${account.fdMaster!.pROVISIONS}"),
               DetailEntryWidget(
-                  title: "Provision Amount",
-                  value: "₹ ${account.fdMaster!.pROVISIONS}"),
+                  title: "Nominee Name", value: "₹ ${account.nomineeName}"),
               SizedBox(
                 width: 10 * fem,
               ),

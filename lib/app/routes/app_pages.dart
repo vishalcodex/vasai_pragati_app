@@ -1,5 +1,6 @@
 import '../screens/deposit/views/multiple_accounts_screen.dart';
 import '../screens/home/views/emi_calculator_screen.dart';
+import '../screens/home/views/fd_calculator_screen.dart';
 import '../screens/home/views/my_profile.dart';
 import '../components/congrats_screen.dart';
 import '../screens/auth/views/create_password_screen.dart';
@@ -201,6 +202,12 @@ class AppPages {
     GetPage(
       name: Routes.EMI_CALCI,
       page: () => EMICalculatorScreen(),
+      binding: HomeBinding(),
+      // middlewares: [OnBoardingMiddleWare()],
+    ),
+    GetPage(
+      name: Routes.FD_CALCI,
+      page: () => FixedDepositCalculator(),
       binding: HomeBinding(),
       // middlewares: [OnBoardingMiddleWare()],
     ),

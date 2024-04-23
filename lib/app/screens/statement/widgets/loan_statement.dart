@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -6,12 +7,13 @@ import '../../../models/account_model.dart';
 import '../../../models/transaction_model.dart';
 
 class LoanStatement {
-  static pw.Document createStatement(
+  static Future<pw.Document> createStatement(
       Account account,
       List<Transaction> transactions,
       String fromDate,
       String toDate,
-      double accBalance) {
+      double accBalance) async {
+    var loadImage = await rootBundle.load('assets/ui/logo.png');
     pw.TextStyle style =
         const pw.TextStyle(fontSize: 9, color: PdfColors.black);
     pw.Document pdf = pw.Document();
@@ -53,13 +55,30 @@ class LoanStatement {
                   mainAxisAlignment: pw.MainAxisAlignment.start,
                   crossAxisAlignment: pw.CrossAxisAlignment.center,
                   children: [
-                    // pw.Image(
-                    //   pw.MemoryImage(logoImage),
-                    // ),
                     pw.SizedBox(height: 15),
-                    pw.Text(
-                        "VASAI PRAGATI CO-OPERATIVE CREDIT SOCIETY LTD., ARNALA",
-                        style: style.copyWith(fontWeight: pw.FontWeight.bold)),
+                    pw.Row(
+                        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: pw.CrossAxisAlignment.center,
+                        children: [
+                          pw.SizedBox(
+                            height: 50,
+                            width: 50,
+                            // child: pw.Image(
+                            //   pw.MemoryImage(loadImage.buffer.asUint8List(loadImage.offsetInBytes, loadImage.lengthInBytes)),
+                            // ),
+                          ),
+                          pw.Text(
+                              "VASAI PRAGATI CO-OPERATIVE CREDIT SOCIETY LTD., ARNALA",
+                              style: style.copyWith(
+                                  fontWeight: pw.FontWeight.bold)),
+                          pw.SizedBox(
+                            height: 30,
+                            width: 30,
+                            child: pw.Image(
+                              pw.MemoryImage(loadImage.buffer.asUint8List(loadImage.offsetInBytes, loadImage.lengthInBytes)),
+                            ),
+                          )
+                        ]),
                     pw.SizedBox(height: 15),
                     //FROM, BRANCH, REPORT DATE
                     pw.Row(
@@ -181,26 +200,32 @@ class LoanStatement {
                     pw.SizedBox(height: 5),
                     // NAME
                     pw.Row(children: [
-                      pw.Text("Name : ${account.accountName!.toUpperCase()}",
+                      pw.Text("Acc. Holder Name : ${account.accountName!.toUpperCase()}",
                           textAlign: pw.TextAlign.left, style: style),
                     ]),
                     pw.SizedBox(height: 5),
                     // NAME
                     pw.Row(children: [
-                      pw.Text("Guaranter 1 : ${account.loanMaster!.gr1RegNo!}",
-                          textAlign: pw.TextAlign.left, style: style),
+                      pw.Text(
+                          "Guaranter 1 : ${account.loanMaster?.gr1RegNo ?? ""}",
+                          textAlign: pw.TextAlign.left,
+                          style: style),
                     ]),
                     pw.SizedBox(height: 5),
                     // NAME
                     pw.Row(children: [
-                      pw.Text("Guaranter 2 : ${account.loanMaster!.gr2RegNo!}",
-                          textAlign: pw.TextAlign.left, style: style),
+                      pw.Text(
+                          "Guaranter 2 : ${account.loanMaster?.gr2RegNo ?? ""}",
+                          textAlign: pw.TextAlign.left,
+                          style: style),
                     ]),
                     pw.SizedBox(height: 5),
                     // NAME
                     pw.Row(children: [
-                      pw.Text("Guaranter 3 : ${account.loanMaster!.gr3RegNo!}",
-                          textAlign: pw.TextAlign.left, style: style),
+                      pw.Text(
+                          "Guaranter 3 : ${account.loanMaster?.gr3RegNo ?? ""}",
+                          textAlign: pw.TextAlign.left,
+                          style: style),
                     ]),
                     pw.SizedBox(height: 15),
                     pw.Divider(color: PdfColors.black, thickness: 1, height: 1),
@@ -370,8 +395,11 @@ class LoanStatement {
                                 pw.Expanded(
                                   flex: 2,
                                   child: pw.Text(
-                                    element.shNarration!,
-                                    textAlign: pw.TextAlign.center,
+                                    (((element.nARRATION ?? "") == "")
+                                            ? element.shNarration
+                                            : element.nARRATION)
+                                        .toString(),
+                                    textAlign: pw.TextAlign.left,
                                     style: style.copyWith(fontSize: 9.5),
                                   ),
                                 ),
