@@ -43,7 +43,7 @@ class DepositController extends GetxController {
     selectedAccount.value = Account();
     fetchAccounts(element);
     pageName.refresh();
-    if (element.aliasName!.trim() == "FD") {
+    if (["RD", "FD", "DD"].contains(element.aliasName!.trim())) {
       Get.toNamed(Routes.MULTIPLE_AACOUNTS);
     } else {
       Get.toNamed(Routes.DEPOSIT_DETAILS);

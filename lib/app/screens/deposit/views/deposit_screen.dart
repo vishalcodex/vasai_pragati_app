@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:vasai_pragati/app/services/auth_service.dart';
 
 import '../../../../common/color_pallete.dart';
 import '../../../components/ui/custom_app_bar.dart';
+import '../../../components/ui/my_list_view.dart';
 import '../../../components/ui/rounded_container.dart';
 import '../../../components/ui/text_view.dart';
 import '../controllers/deposit_controller.dart';
@@ -137,10 +139,96 @@ class DepositScreen extends GetView<DepositController> {
                           ),
                   ),
                 ),
+                SizedBox(
+                  height: 10 * fem,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 15.0 * fem, vertical: 5 * fem),
+                  child: MyListView(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(boxShadow: [
+                          BoxShadow(
+                              spreadRadius: 5,
+                              blurRadius: 10,
+                              color: ColorPallete.grey.withOpacity(0.5))
+                        ]),
+                        child: RoundedContainer(
+                          radius: 10,
+                          color: ColorPallete.theme,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 10.0 * fem, horizontal: 15 * fem),
+                            child: MyListView(
+                              children: [
+                                SizedBox(
+                                  height: 5 * fem,
+                                ),
+                                const TextView(
+                                  text: "Overall Summary",
+                                  fontSize: 14,
+                                  color: ColorPallete.secondary,
+                                  weight: FontWeight.bold,
+                                ),
+                                SizedBox(
+                                  height: 10 * fem,
+                                ),
+                                _getEntry("No. Of Account", "5"),
+                                _getEntry(
+                                    "Account Name",
+                                    Get.find<AuthService>()
+                                            .user
+                                            .value
+                                            .accountName ??
+                                        ""),
+                                _getEntry("Amount", "₹ 5,00,000"),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                )
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  _getEntry(String title, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: 5.0,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 2,
+            child: TextView(
+              text: title,
+              fontSize: 14,
+              color: ColorPallete.secondary,
+              overflow: TextOverflow.ellipsis,
+              maxlines: 1,
+            ),
+          ),
+          Expanded(
+            flex: 3,
+            child: TextView(
+              text: value.capitalize!,
+              fontSize: 14,
+              color: ColorPallete.primary,
+              alignment: TextAlign.right,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
       ),
     );
   }

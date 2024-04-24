@@ -294,6 +294,9 @@ class MultipleAccountsScreen extends GetView<DepositController> {
                                                         height: 5 * fem,
                                                       ),
                                                       Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
                                                         children: [
                                                           const TextView(
                                                             text:
@@ -302,15 +305,17 @@ class MultipleAccountsScreen extends GetView<DepositController> {
                                                                 .secondary,
                                                             fontSize: 16,
                                                           ),
-                                                          TextView(
-                                                            text: element
-                                                                .accountName!
-                                                                .capitalize!,
-                                                            color: ColorPallete
-                                                                .primary,
-                                                            fontSize: 16,
+                                                          Expanded(
+                                                            child: TextView(
+                                                              text: element
+                                                                  .accountName!
+                                                                  .capitalize!,
+                                                              color:
+                                                                  ColorPallete
+                                                                      .primary,
+                                                              fontSize: 16,
+                                                            ),
                                                           ),
-                                                          const Spacer(),
                                                         ],
                                                       ),
                                                       SizedBox(

@@ -126,6 +126,11 @@ class HomeController extends GetxController {
       "image": "assets/ui/deposits.png",
       "color": 0xff6AE7CF
     },
+    {
+      "title": "Recurring Deposit Calculator",
+      "image": "assets/ui/deposits.png",
+      "color": 0xff6AE7CF
+    },
   ].obs;
 
   RxString selectedService = "Deposit".obs;
@@ -178,6 +183,9 @@ class HomeController extends GetxController {
       case "Fixed Deposit Calculator":
         Get.toNamed(Routes.FD_CALCI);
         break;
+      case "Recurring Deposit Calculator":
+        Get.toNamed(Routes.RD_CALCI);
+        break;
       default:
     }
   }
@@ -210,4 +218,12 @@ class HomeController extends GetxController {
   RxString customerType = "Normal".obs;
   RxString tenureType = "YY/MM/DD".obs;
   RxDouble fdAmount = 5000.0.obs;
+  RxDouble fdInterest = 5.0.obs;
+
+  void onCustomerTypeChanged(String e) {
+    customerType.value = e;
+    fdInterest.value = e == "Normal" ? 5.0 : 5.5;
+    fdInterest.refresh();
+    customerType.refresh();
+  }
 }

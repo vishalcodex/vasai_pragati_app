@@ -75,7 +75,9 @@ class LoanStatement {
                             height: 30,
                             width: 30,
                             child: pw.Image(
-                              pw.MemoryImage(loadImage.buffer.asUint8List(loadImage.offsetInBytes, loadImage.lengthInBytes)),
+                              pw.MemoryImage(loadImage.buffer.asUint8List(
+                                  loadImage.offsetInBytes,
+                                  loadImage.lengthInBytes)),
                             ),
                           )
                         ]),
@@ -200,8 +202,10 @@ class LoanStatement {
                     pw.SizedBox(height: 5),
                     // NAME
                     pw.Row(children: [
-                      pw.Text("Acc. Holder Name : ${account.accountName!.toUpperCase()}",
-                          textAlign: pw.TextAlign.left, style: style),
+                      pw.Text(
+                          "Acc. Holder Name : ${account.accountName!.toUpperCase()}",
+                          textAlign: pw.TextAlign.left,
+                          style: style),
                     ]),
                     pw.SizedBox(height: 5),
                     // NAME
@@ -227,6 +231,41 @@ class LoanStatement {
                           textAlign: pw.TextAlign.left,
                           style: style),
                     ]),
+                    pw.SizedBox(height: 5),
+                    // Overdue_amount
+                    //  - Overdue_interest
+                    //  - Surcharge
+                    //  - Penalty
+                    pw.Row(
+                        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: pw.CrossAxisAlignment.center,
+                        children: [
+                          pw.Expanded(
+                            child: pw.Text(
+                                "Overdue Amount : ${account.loanMaster!.overdue}",
+                                textAlign: pw.TextAlign.left,
+                                style: style),
+                          ),
+                          pw.Expanded(
+                            child: pw.Text(
+                                "Overdue Interest : ${account.loanMaster!.overdue}",
+                                textAlign: pw.TextAlign.left,
+                                style: style),
+                          ),
+                          pw.Expanded(
+                            child: pw.Text(
+                                "Surcharge : ${account.loanMaster!.surchargerate}",
+                                textAlign: pw.TextAlign.left,
+                                style: style),
+                          ),
+                          pw.Expanded(
+                            child: pw.Text(
+                                "Penalty : ${account.loanMaster!.penalty}",
+                                textAlign: pw.TextAlign.left,
+                                style: style),
+                          ),
+                        ]),
+
                     pw.SizedBox(height: 15),
                     pw.Divider(color: PdfColors.black, thickness: 1, height: 1),
                     //HEADER

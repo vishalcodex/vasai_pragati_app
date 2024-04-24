@@ -11,8 +11,8 @@ import '../../../components/ui/text_field.dart';
 import '../../../components/ui/text_view.dart';
 import '../controllers/home_controller.dart';
 
-class FixedDepositCalculator extends GetView<HomeController> {
-  const FixedDepositCalculator({super.key});
+class RecurringDepositCalculator extends GetView<HomeController> {
+  const RecurringDepositCalculator({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class FixedDepositCalculator extends GetView<HomeController> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size(0, 50 * fem),
-        child: CustomAppBar(pageName: "Fixed Deposit Calculator"),
+        child: CustomAppBar(pageName: "Recurring Deposit Calculator"),
       ),
       backgroundColor: ColorPallete.theme,
       body: Column(
@@ -68,8 +68,8 @@ class FixedDepositCalculator extends GetView<HomeController> {
                                         return Expanded(
                                           child: InkWell(
                                             onTap: () {
-                                              controller
-                                                  .onCustomerTypeChanged(e);
+                                              controller.customerType.value = e;
+                                              controller.customerType.refresh();
                                             },
                                             child: Row(
                                               children: [
@@ -478,7 +478,7 @@ class FixedDepositCalculator extends GetView<HomeController> {
                                   height: 5 * fem,
                                 ),
                                 const TextView(
-                                  text: "FD Maturity Details",
+                                  text: "RD Maturity Details",
                                   fontSize: 14,
                                   color: ColorPallete.secondary,
                                   weight: FontWeight.bold,
