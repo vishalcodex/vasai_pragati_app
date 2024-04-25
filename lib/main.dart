@@ -22,6 +22,7 @@ Future initServices() async {
 }
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   //ONE SIGNAL
   //Remove this method to stop OneSignal Debugging
   if (kDebugMode) {
@@ -31,7 +32,6 @@ void main() async {
   // The promptForPushNotificationsWithUserResponse function will show the iOS or Android push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
   OneSignal.Notifications.requestPermission(true);
 
-  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(new MyApp());
