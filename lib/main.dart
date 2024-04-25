@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:local_session_timeout/local_session_timeout.dart';
-// import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import '/common/theme.dart';
 import '../app/routes/app_pages.dart';
 import 'package:get/get.dart';
@@ -24,12 +24,12 @@ Future initServices() async {
 void main() async {
   //ONE SIGNAL
   //Remove this method to stop OneSignal Debugging
-  // if (kDebugMode) {
-  //   OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
-  // }
-  // OneSignal.initialize("<YOUR APP ID HERE>");
+  if (kDebugMode) {
+    OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
+  }
+  OneSignal.initialize("85bf9843-0435-43f4-a11e-bf53e703a3a9");
   // The promptForPushNotificationsWithUserResponse function will show the iOS or Android push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
-  // OneSignal.Notifications.requestPermission(true);
+  OneSignal.Notifications.requestPermission(true);
 
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
