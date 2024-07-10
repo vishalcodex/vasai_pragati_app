@@ -5,14 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../../models/account_summary_model.dart';
 import '../../../models/ads_model.dart';
+import '../../../models/notification_model.dart' as nf;
 import '../../../models/api_response.dart';
+import '../../../models/interest_model.dart';
 import '../../../models/profile_model.dart';
+import '../../../models/subgroup_model.dart';
 import '../../../models/user_model.dart';
 import '../../../repositories/feature_repository.dart';
 import '../../../repositories/user_repository.dart';
 import '../../../routes/app_routes.dart';
 import '../../../services/auth_service.dart';
+import '../../deposit/controllers/deposit_controller.dart';
+import '../../loans/controllers/loan_controller.dart';
 
 class HomeController extends GetxController {
   Rx<User> user = User().obs;
@@ -57,6 +63,8 @@ class HomeController extends GetxController {
     fetchFeatures();
   }
 
+  RxString greetings = "Morning".obs;
+
   void updateUser() async {
     await _userRepository.fetchUserDetails().then((value) async {
       if (value.status == Status.COMPLETED) {
@@ -65,7 +73,7 @@ class HomeController extends GetxController {
           user.refresh();
         });
       } else {
-        Get.find<AuthService>().removeCurrentUser();
+        // Get.find<AuthService>().removeCurrentUser();
         Get.toNamed(Routes.AUTH);
       }
     });
@@ -135,7 +143,21 @@ class HomeController extends GetxController {
 
   RxString selectedService = "Deposit".obs;
 
+  getGreetings() {
+    var hour = DateTime.now().hour;
+    if (hour < 12) {
+      return 'Morning';
+    }
+    if (hour < 17) {
+      return 'Afternoon';
+    }
+    return 'Evening';
+  }
+
   fetchFeatures() async {
+    greetings.value = getGreetings();
+    greetings.refresh();
+
     await _featureRepository.fetchNotice().then((value) {
       if (value.status == Status.COMPLETED) {
         notice.value = value.data;
@@ -150,10 +172,12 @@ class HomeController extends GetxController {
     });
     ads.refresh();
     isLoading.value = false;
-    Future.delayed(Duration(seconds: 4), () {
+    Future.delayed(const Duration(seconds: 4), () {
       pageController.nextPage(
           duration: const Duration(seconds: 1), curve: Curves.linear);
     });
+
+    fetchSummary(selectedSummary.value);
   }
 
   void homeRefresh() {
@@ -214,16 +238,104 @@ class HomeController extends GetxController {
         .toString();
   }
 
-  //FD Calculator
+  //FD & RD Calculator
   RxString customerType = "Normal".obs;
   RxString tenureType = "YY/MM/DD".obs;
   RxDouble fdAmount = 5000.0.obs;
-  RxDouble fdInterest = 5.0.obs;
 
-  void onCustomerTypeChanged(String e) {
-    customerType.value = e;
-    fdInterest.value = e == "Normal" ? 5.0 : 5.5;
-    fdInterest.refresh();
-    customerType.refresh();
+  Rx<Interest> fdInterest = Interest(actype: "FD").obs;
+  void fetchFDInterest() async {
+    isLoading.value = true;
+    fdInterest.value = Interest(actype: "FD");
+    await _featureRepository.fetchRateOfInterest({
+      "actype": "FD",
+      "category": customerType.value == "Normal" ? "G" : "S",
+      "period": "$tenure",
+      "wef": DateFormat("MM-dd-yyyy").format(DateTime.now())
+    }).then((value) {
+      isLoading.value = false;
+      if (value.status == Status.COMPLETED) {
+        fdInterest.value = value.data[0];
+        fdInterest.refresh();
+      }
+    });
+  }
+
+  Rx<Interest> rdInterest = Interest(actype: "RD").obs;
+  void fetchRDInterest() async {
+    isLoading.value = true;
+    rdInterest.value = Interest(actype: "RD");
+    await _featureRepository.fetchRateOfInterest({
+      "actype": "RD",
+      "category": customerType.value == "Normal" ? "G" : "S",
+      "period": "$tenure",
+      "wef": DateFormat("MM-dd-yyyy").format(DateTime.now())
+    }).then((value) {
+      isLoading.value = false;
+      if (value.status == Status.COMPLETED) {
+        rdInterest.value = value.data[0];
+        rdInterest.refresh();
+      }
+    });
+  }
+
+  //OVERALL SUMMARY
+  RxList<AccountSummary> selectedAccountSummary = <AccountSummary>[].obs;
+  RxString selectedSummary = "Deposit".obs;
+
+  void fetchSummary(String e) async {
+    isLoading.value = true;
+    await _featureRepository.fetchSummary().then((value) {
+      isLoading.value = false;
+      if (value.status == Status.COMPLETED) {
+        selectedAccountSummary.value = (value.data as List<AccountSummary>)
+            .where((element) => element.subgroupName!
+                .toLowerCase()
+                .contains(e == "Deposit" ? "deposits" : "loan"))
+            .toList();
+        selectedAccountSummary.refresh();
+      }
+    });
+  }
+
+  void onSummaryTabSelected(String e) {
+    selectedSummary.value = e;
+    fetchSummary(e);
+  }
+
+  void onSummarySelected(AccountSummary summary) {
+    Subgroup subgroup = Subgroup(
+        subgroupId: summary.subgroupId, subgroupName: summary.subgroupName);
+    if (selectedSummary.value == "Deposit") {
+      DepositController controller;
+      Get.put(DepositController());
+      controller = Get.find<DepositController>();
+      controller.onDepositServiceClicked(subgroup);
+    } else {
+      LoanController controller;
+      Get.put(LoanController());
+      controller = Get.find<LoanController>();
+      controller.onLoanServiceClicked(subgroup);
+    }
+  }
+
+  // NOTIFICATIONS
+  RxList<nf.Notification> notifications = <nf.Notification>[].obs;
+  void fetchNotifications() async {
+    isLoading.value = true;
+    await _featureRepository.fetchNotifiactions().then((value) {
+      isLoading.value = false;
+      if (value.status == Status.COMPLETED) {
+        notifications.value = value.data;
+        notifications.refresh();
+      }
+    });
+  }
+
+  double getFDMaturityAmount() {
+    double value = fdAmount.value *
+        pow(1 + (double.parse(fdInterest.value.interest ?? "0.0") / 100) / 4,
+            4 * tenure.value / 12);
+    return value;
   }
 }

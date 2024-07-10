@@ -50,256 +50,278 @@ class DepositDetailsScreen extends GetView<DepositController> {
             child: RoundedContainer(
               radius: 0,
               color: ColorPallete.grey.withOpacity(0.25),
-              child: Column(
-                children: [
-                  Expanded(
-                    child: MyListView(
-                      scroll: true,
-                      children: [
-                        MyListView(
-                          children: [
-                            controller.pageName.value.aliasName!.trim() == "SB"
-                                ? const SavingsView()
-                                : controller.pageName.value.aliasName!.trim() ==
-                                        "CD"
-                                    ? const CurrentDepositsView()
-                                    : ["FD", "DD", "MIDS", "QIDS"].contains(
-                                            controller.pageName.value.aliasName!
-                                                .trim())
-                                        ? const FixedDoubleMIDQIDDepositsView()
-                                        : ["SMD", "DDS"].contains(controller
-                                                .pageName.value.aliasName!
-                                                .trim())
-                                            ? const SumangalDailyDepositsView()
-                                            : controller.pageName.value
-                                                        .aliasName!
-                                                        .trim() ==
-                                                    "RD"
-                                                ? RecurringDepositsView()
-                                                : const MyListView(
-                                                    scroll: true,
-                                                    children: [],
-                                                  ),
-                          ],
+              child: Obx(
+                () => controller.noAccounts.value
+                    ? const Center(
+                        child: TextView(
+                          text: "No Accounts",
+                          color: ColorPallete.grey,
+                          weight: FontWeight.bold,
+                          fontSize: 25,
                         ),
-                        SizedBox(
-                          height: 5 * fem,
-                        ),
-                        if (![
-                          "FD",
-                          "DD",
-                          "MIDS",
-                          "QIDS"
-                        ].contains(controller.pageName.value.aliasName!.trim()))
-                          MyListView(
-                            children: [
-                              RoundedContainer(
-                                radius: 0,
-                                color: ColorPallete.theme,
-                                child: InkWell(
-                                  onTap: () {
-                                    controller.showTransactions.value =
-                                        !controller.showTransactions.value;
-                                  },
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 15.0 * fem,
-                                        vertical: 10 * fem),
-                                    child: Row(
-                                      children: [
-                                        const TextView(
-                                          text: "Transactions",
-                                          fontSize: 16,
-                                          color: ColorPallete.secondary,
-                                          weight: FontWeight.w700,
+                      )
+                    : Column(
+                        children: [
+                          Expanded(
+                            child: MyListView(
+                              scroll: true,
+                              children: [
+                                MyListView(
+                                  children: [
+                                    controller.pageName.value.subgroupId!
+                                                .trim() ==
+                                            "1" //"SB"
+                                        ? const SavingsView()
+                                        : controller.pageName.value.subgroupId!
+                                                    .trim() ==
+                                                "2" // "CD"
+                                            ? const CurrentDepositsView()
+                                            : [
+                                                "3", //"FD",
+                                                "4", //"DD",
+                                                "5", // "MIDS",
+                                                "6", // "QIDS"
+                                              ].contains(controller
+                                                    .pageName.value.subgroupId!
+                                                    .trim())
+                                                ? const FixedDoubleMIDQIDDepositsView()
+                                                : [
+                                                    "7", // "SMD",
+                                                    "22", // "DDS"
+                                                  ].contains(controller.pageName
+                                                        .value.subgroupId!
+                                                        .trim())
+                                                    ? const SumangalDailyDepositsView()
+                                                    : controller.pageName.value
+                                                                .subgroupId!
+                                                                .trim() ==
+                                                            "8" // "RD"
+                                                        ? RecurringDepositsView()
+                                                        : const MyListView(
+                                                            scroll: true,
+                                                            children: [],
+                                                          ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 5 * fem,
+                                ),
+                                if (![
+                                  "3", //"FD",
+                                  "4", //"DD",
+                                  "5", // "MIDS",
+                                  "6", // "QIDS"
+                                ].contains(controller.pageName.value.subgroupId!
+                                    .trim()))
+                                  MyListView(
+                                    children: [
+                                      RoundedContainer(
+                                        radius: 0,
+                                        color: ColorPallete.theme,
+                                        child: InkWell(
+                                          onTap: () {
+                                            controller.showTransactions.value =
+                                                !controller
+                                                    .showTransactions.value;
+                                          },
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 15.0 * fem,
+                                                vertical: 10 * fem),
+                                            child: Row(
+                                              children: [
+                                                const TextView(
+                                                  text: "Transactions",
+                                                  fontSize: 16,
+                                                  color: ColorPallete.secondary,
+                                                  weight: FontWeight.w700,
+                                                ),
+                                                const Spacer(),
+                                                Obx(() => Transform.rotate(
+                                                      angle: controller
+                                                              .showTransactions
+                                                              .value
+                                                          ? pi
+                                                          : 0,
+                                                      child: const Icon(
+                                                        Icons
+                                                            .arrow_drop_down_circle_outlined,
+                                                        color: ColorPallete
+                                                            .secondary,
+                                                      ),
+                                                    ))
+                                              ],
+                                            ),
+                                          ),
                                         ),
-                                        const Spacer(),
-                                        Obx(() => Transform.rotate(
-                                              angle: controller
-                                                      .showTransactions.value
-                                                  ? pi
-                                                  : 0,
-                                              child: const Icon(
-                                                Icons
-                                                    .arrow_drop_down_circle_outlined,
-                                                color: ColorPallete.secondary,
-                                              ),
-                                            ))
-                                      ],
+                                      ),
+                                      Obx(
+                                        () => AnimatedSize(
+                                          duration: const Duration(seconds: 1),
+                                          child: controller
+                                                  .showTransactions.value
+                                              ? Container(
+                                                  child: RoundedContainer(
+                                                    radius: 0,
+                                                    color: ColorPallete.theme,
+                                                    child:
+                                                        (controller
+                                                                .selectedAccount
+                                                                .value
+                                                                .transactions
+                                                                .isEmpty)
+                                                            ? Padding(
+                                                                padding: EdgeInsets
+                                                                    .all(50.0 *
+                                                                        fem),
+                                                                child:
+                                                                    const Center(
+                                                                  child:
+                                                                      CircularProgressIndicator(
+                                                                    color: ColorPallete
+                                                                        .primary,
+                                                                  ),
+                                                                ),
+                                                              )
+                                                            : MyListView(
+                                                                children: controller
+                                                                    .selectedAccount
+                                                                    .value
+                                                                    .transactions
+                                                                    .map((e) {
+                                                                  return double.parse(e.amount ??
+                                                                              "0") ==
+                                                                          0
+                                                                      ? const SizedBox
+                                                                          .shrink()
+                                                                      : Padding(
+                                                                          padding:
+                                                                              EdgeInsets.symmetric(horizontal: 5.0 * fem),
+                                                                          child:
+                                                                              MyListView(
+                                                                            children: [
+                                                                              Padding(
+                                                                                padding: EdgeInsets.all(10.0 * fem),
+                                                                                child: RoundedContainer(
+                                                                                  radius: 0,
+                                                                                  child: Row(
+                                                                                    children: [
+                                                                                      Expanded(
+                                                                                        child: MyListView(
+                                                                                          children: [
+                                                                                            TextView(
+                                                                                              text: DateFormat("dd MMM yyyy").format(DateFormat("yyyy-MM-dd").parse(e.trnDate!)),
+                                                                                              color: ColorPallete.primary,
+                                                                                              fontSize: 16,
+                                                                                              weight: FontWeight.w600,
+                                                                                            ),
+                                                                                            SizedBox(
+                                                                                              height: 5 * fem,
+                                                                                            ),
+                                                                                            TextView(
+                                                                                              text: "${e.shNarration!} ${e.nARRATION!}",
+                                                                                              color: ColorPallete.grey,
+                                                                                              weight: FontWeight.w600,
+                                                                                            ),
+                                                                                          ],
+                                                                                        ),
+                                                                                      ),
+                                                                                      Expanded(
+                                                                                        child: Row(
+                                                                                          mainAxisAlignment: MainAxisAlignment.end,
+                                                                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                                                                          children: [
+                                                                                            TextView(alignment: TextAlign.right, fontSize: 18, color: ColorPallete.secondary, text: e.amount!),
+                                                                                            Padding(
+                                                                                              padding: EdgeInsets.only(bottom: 1.0 * fem),
+                                                                                              child: TextView(
+                                                                                                text: e.crdb == "C" ? " Cr" : " Dr",
+                                                                                                alignment: TextAlign.right,
+                                                                                                color: e.crdb == "C" ? Colors.green : ColorPallete.red,
+                                                                                              ),
+                                                                                            ),
+                                                                                          ],
+                                                                                        ),
+                                                                                      ),
+                                                                                    ],
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              Padding(
+                                                                                padding: EdgeInsets.symmetric(horizontal: 5.0 * fem),
+                                                                                child: Divider(
+                                                                                  thickness: 1 * fem,
+                                                                                  height: 1 * fem,
+                                                                                  color: ColorPallete.grey.withOpacity(0.2),
+                                                                                ),
+                                                                              )
+                                                                            ],
+                                                                          ),
+                                                                        );
+                                                                }).toList(),
+                                                              ),
+                                                  ),
+                                                )
+                                              : const SizedBox.shrink(),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                              ],
+                            ),
+                          ),
+                          if (![
+                            "3", //"FD",
+                            "4", //"DD",
+                            "5", // "MIDS",
+                            "6", // "QIDS"
+                          ].contains(
+                              controller.pageName.value.subgroupId!.trim()))
+                            Container(
+                              decoration: BoxDecoration(boxShadow: [
+                                BoxShadow(
+                                  color: ColorPallete.grey.withOpacity(0.25),
+                                  blurRadius: 10 * fem,
+                                  spreadRadius: 1 * fem,
+                                )
+                              ]),
+                              child: Container(
+                                color: ColorPallete.theme,
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 20.0 * fem,
+                                      vertical: 10 * fem),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Get.toNamed(Routes.STATEMENT, arguments: {
+                                        "account":
+                                            controller.selectedAccount.value,
+                                        "type": "DEPOSIT"
+                                      });
+                                    },
+                                    child: RoundedContainer(
+                                      radius: 10,
+                                      height: 45,
+                                      color: ColorPallete.primary,
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 10.0 * fem),
+                                        child: const Center(
+                                          child: TextView(
+                                            text: "Download Statement",
+                                            color: ColorPallete.theme,
+                                            weight: FontWeight.w600,
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                              Obx(
-                                () => AnimatedSize(
-                                  duration: const Duration(seconds: 1),
-                                  child: controller.showTransactions.value
-                                      ? Container(
-                                          child: RoundedContainer(
-                                            radius: 0,
-                                            color: ColorPallete.theme,
-                                            child:
-                                                (controller
-                                                        .selectedAccount
-                                                        .value
-                                                        .transactions
-                                                        .isEmpty)
-                                                    ? Padding(
-                                                        padding: EdgeInsets.all(
-                                                            50.0 * fem),
-                                                        child: const Center(
-                                                          child:
-                                                              CircularProgressIndicator(
-                                                            color: ColorPallete
-                                                                .primary,
-                                                          ),
-                                                        ),
-                                                      )
-                                                    : MyListView(
-                                                        children: controller
-                                                            .selectedAccount
-                                                            .value
-                                                            .transactions
-                                                            .map((e) {
-                                                          return double.parse(
-                                                                      e.amount ??
-                                                                          "0") ==
-                                                                  0
-                                                              ? const SizedBox
-                                                                  .shrink()
-                                                              : Padding(
-                                                                  padding: EdgeInsets.symmetric(
-                                                                      horizontal:
-                                                                          5.0 *
-                                                                              fem),
-                                                                  child:
-                                                                      MyListView(
-                                                                    children: [
-                                                                      Padding(
-                                                                        padding:
-                                                                            EdgeInsets.all(10.0 *
-                                                                                fem),
-                                                                        child:
-                                                                            RoundedContainer(
-                                                                          radius:
-                                                                              0,
-                                                                          child:
-                                                                              Row(
-                                                                            children: [
-                                                                              Expanded(
-                                                                                child: MyListView(
-                                                                                  children: [
-                                                                                    TextView(
-                                                                                      text: DateFormat("dd MMM yyyy").format(DateFormat("yyyy-MM-dd").parse(e.trnDate!)),
-                                                                                      color: ColorPallete.primary,
-                                                                                      fontSize: 16,
-                                                                                      weight: FontWeight.w600,
-                                                                                    ),
-                                                                                    SizedBox(
-                                                                                      height: 5 * fem,
-                                                                                    ),
-                                                                                    TextView(
-                                                                                      text: "${e.shNarration!} ${e.nARRATION!}",
-                                                                                      color: ColorPallete.grey,
-                                                                                      weight: FontWeight.w600,
-                                                                                    ),
-                                                                                  ],
-                                                                                ),
-                                                                              ),
-                                                                              Expanded(
-                                                                                child: Row(
-                                                                                  mainAxisAlignment: MainAxisAlignment.end,
-                                                                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                                                                  children: [
-                                                                                    TextView(alignment: TextAlign.right, fontSize: 18, color: ColorPallete.secondary, text: e.amount!),
-                                                                                    Padding(
-                                                                                      padding: EdgeInsets.only(bottom: 1.0 * fem),
-                                                                                      child: TextView(
-                                                                                        text: e.crdb == "C" ? " Cr" : " Dr",
-                                                                                        alignment: TextAlign.right,
-                                                                                        color: e.crdb == "C" ? Colors.green : ColorPallete.red,
-                                                                                      ),
-                                                                                    ),
-                                                                                  ],
-                                                                                ),
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      Padding(
-                                                                        padding:
-                                                                            EdgeInsets.symmetric(horizontal: 5.0 * fem),
-                                                                        child:
-                                                                            Divider(
-                                                                          thickness:
-                                                                              1 * fem,
-                                                                          height:
-                                                                              1 * fem,
-                                                                          color: ColorPallete
-                                                                              .grey
-                                                                              .withOpacity(0.2),
-                                                                        ),
-                                                                      )
-                                                                    ],
-                                                                  ),
-                                                                );
-                                                        }).toList(),
-                                                      ),
-                                          ),
-                                        )
-                                      : const SizedBox.shrink(),
-                                ),
-                              ),
-                            ],
-                          ),
-                      ],
-                    ),
-                  ),
-                  if (!["FD", "DD", "MIDS", "QIDS"]
-                      .contains(controller.pageName.value.aliasName!.trim()))
-                    Container(
-                      decoration: BoxDecoration(boxShadow: [
-                        BoxShadow(
-                          color: ColorPallete.grey.withOpacity(0.25),
-                          blurRadius: 10 * fem,
-                          spreadRadius: 1 * fem,
-                        )
-                      ]),
-                      child: Container(
-                        color: ColorPallete.theme,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 20.0 * fem, vertical: 10 * fem),
-                          child: InkWell(
-                            onTap: () {
-                              Get.toNamed(Routes.STATEMENT, arguments: {
-                                "account": controller.selectedAccount.value,
-                                "type": "DEPOSIT"
-                              });
-                            },
-                            child: RoundedContainer(
-                              radius: 10,
-                              height: 45,
-                              color: ColorPallete.primary,
-                              child: Padding(
-                                padding:
-                                    EdgeInsets.symmetric(vertical: 10.0 * fem),
-                                child: const Center(
-                                  child: TextView(
-                                    text: "Download Statement",
-                                    color: ColorPallete.theme,
-                                    weight: FontWeight.w600,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                            )
+                        ],
                       ),
-                    )
-                ],
               ),
             ),
           ),

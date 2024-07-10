@@ -36,6 +36,7 @@ class DepositController extends GetxController {
   Rx<Subgroup> pageName = Subgroup().obs;
 
   void onDepositServiceClicked(Subgroup element) {
+    showTransactions.value = true;
     pageName = Subgroup().obs;
     pageName.value = element;
 
@@ -43,13 +44,19 @@ class DepositController extends GetxController {
     selectedAccount.value = Account();
     fetchAccounts(element);
     pageName.refresh();
-    if (["RD", "FD", "DD"].contains(element.aliasName!.trim())) {
+    if ([
+      "3", //"FD",
+      "4", //"DD",
+      "8", //"RD",
+    ].contains(element.subgroupId!.trim())) {
       Get.toNamed(Routes.MULTIPLE_AACOUNTS);
     } else {
       Get.toNamed(Routes.DEPOSIT_DETAILS);
     }
   }
 
+  RxBool isLoading = false.obs;
+  RxBool noAccounts = false.obs;
   RxList<Account> accounts = <Account>[].obs;
   RxList<Transaction> transactions = <Transaction>[].obs;
   Rx<Account> selectedAccount = Account().obs;
@@ -58,11 +65,18 @@ class DepositController extends GetxController {
   RxBool showTransactions = false.obs;
 
   fetchAccounts(Subgroup subgroup) async {
+    isLoading.value = true;
+    noAccounts.value = false;
     await _accountsRepository.fetchMyAccounts(subgroup).then((value) {
+      isLoading.value = false;
       accounts.value = value.data;
-      selectedAccount.value = accounts[0];
-      selectedAccount.refresh();
-      fetchAccountDetails(selectedAccount.value);
+      if (accounts.isNotEmpty) {
+        selectedAccount.value = accounts[0];
+        selectedAccount.refresh();
+        fetchAccountDetails(selectedAccount.value);
+      } else {
+        noAccounts.value = true;
+      }
     });
   }
 
@@ -73,19 +87,12 @@ class DepositController extends GetxController {
   }
 
   fetchAccountDetails(Account account) async {
+    isLoading.value = true;
     await _accountsRepository.fetchAccountDetails(account).then((value) {
+      isLoading.value = false;
       accountDetails.value = value.data;
     });
   }
-
-  //SAVINGS
-  RxList<String> customOptions =
-      <String>["1 Month", "2 Months", "6 Months"].obs;
-  RxString selectedOption = "".obs;
-  RxString fromDate = "".obs;
-  RxString toDate = "".obs;
-  RxBool isLoading = false.obs;
-  RxBool hasStatement = false.obs;
 
   PageController pageController =
       PageController(initialPage: 0, viewportFraction: 0.95);
@@ -108,8 +115,12 @@ class DepositController extends GetxController {
   String getTotalAmount() {
     double amt = 0;
     for (var element in accounts) {
-      amt += double.parse(element.fdMaster!.maturAmt ?? "0");
+      amt += double.parse(element.balance ?? "0");
     }
-    return amt.toString();
+    return amt.toStringAsFixed(0);
+  }
+
+  void toClosedAccounts() {
+    Get.toNamed(Routes.CLOSED_ACCOUNTS);
   }
 }

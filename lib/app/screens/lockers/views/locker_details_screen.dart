@@ -62,204 +62,57 @@ class LockerDetailsScreen extends GetView<LockerController> {
                                       padding: EdgeInsets.all(10.0 * fem),
                                       child: MyListView(
                                         children: [
-                                          Row(
-                                            children: [
-                                              const Expanded(
-                                                  child: TextView(
-                                                text: "Locker ID",
-                                                fontSize: 14,
-                                                color: ColorPallete.secondary,
-                                              )),
-                                              Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 10.0 * fem),
-                                                child:
-                                                    const TextView(text: ":"),
-                                              ),
-                                              Expanded(
-                                                  flex: 2,
-                                                  child: TextView(
-                                                    text: controller
-                                                        .selectedLocker
-                                                        .value
-                                                        .lOCKERID!,
-                                                    fontSize: 14,
-                                                  ))
-                                            ],
+                                          EntryWidget(
+                                            title: "Branch",
+                                            value: controller.selectedLocker
+                                                .value.branchName,
                                           ),
-                                          SizedBox(
-                                            height: 5 * fem,
+                                          EntryWidget(
+                                            title: "Name",
+                                            value: controller.selectedLocker
+                                                .value.memberName,
                                           ),
-                                          Row(
-                                            children: [
-                                              const Expanded(
-                                                  child: TextView(
-                                                text: "VCH Code",
-                                                fontSize: 14,
-                                                color: ColorPallete.secondary,
-                                              )),
-                                              Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 10.0 * fem),
-                                                child:
-                                                    const TextView(text: ":"),
-                                              ),
-                                              Expanded(
-                                                  flex: 2,
-                                                  child: TextView(
-                                                    text: controller
-                                                        .selectedLocker
-                                                        .value
-                                                        .vCHCODE!,
-                                                    fontSize: 14,
-                                                  ))
-                                            ],
+                                          EntryWidget(
+                                            title: "Locker No.",
+                                            value: controller
+                                                .selectedLocker.value.lockerId,
                                           ),
-                                          SizedBox(
-                                            height: 5 * fem,
+                                          EntryWidget(
+                                            title: "Safe No.",
+                                            value: controller
+                                                .selectedLocker.value.safeNo,
                                           ),
-                                          Row(
-                                            children: [
-                                              const Expanded(
-                                                  child: TextView(
-                                                text: "Locker Type",
-                                                fontSize: 14,
-                                                color: ColorPallete.secondary,
-                                              )),
-                                              Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 10.0 * fem),
-                                                child:
-                                                    const TextView(text: ":"),
-                                              ),
-                                              Expanded(
-                                                  flex: 2,
-                                                  child: TextView(
-                                                    text: controller
-                                                        .selectedLocker
-                                                        .value
-                                                        .lOCKERTYPE!,
-                                                    fontSize: 14,
-                                                  ))
-                                            ],
+                                          EntryWidget(
+                                            title: "Key No.",
+                                            value: controller
+                                                .selectedLocker.value.keyNo,
                                           ),
-                                          SizedBox(
-                                            height: 5 * fem,
+                                          EntryWidget(
+                                            title: "Open Date",
+                                            value: controller.formatDate(
+                                                controller.selectedLocker.value
+                                                    .dateFrom!,
+                                                format: "yyyy-MM-dd"),
                                           ),
-                                          Row(
-                                            children: [
-                                              const Expanded(
-                                                  child: TextView(
-                                                text: "From Date",
-                                                fontSize: 14,
-                                                color: ColorPallete.secondary,
-                                              )),
-                                              Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 10.0 * fem),
-                                                child:
-                                                    const TextView(text: ":"),
-                                              ),
-                                              Expanded(
-                                                  flex: 2,
-                                                  child: TextView(
-                                                    text: controller.formatDate(
-                                                        controller
-                                                            .selectedLocker
-                                                            .value
-                                                            .dATEFROM!,
-                                                        format: "yyyy-MM-dd"),
-                                                    fontSize: 14,
-                                                  ))
-                                            ],
+                                          EntryWidget(
+                                            title: "Nominee",
+                                            value: controller.selectedLocker
+                                                .value.nomineeName,
                                           ),
-                                          SizedBox(
-                                            height: 5 * fem,
+                                          EntryWidget(
+                                            title: "Rate",
+                                            value:
+                                                "₹ ${controller.selectedLocker.value.rent} /-",
                                           ),
-                                          Row(
-                                            children: [
-                                              const Expanded(
-                                                  child: TextView(
-                                                text: "To Date",
-                                                fontSize: 14,
-                                                color: ColorPallete.secondary,
-                                              )),
-                                              Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 10.0 * fem),
-                                                child:
-                                                    const TextView(text: ":"),
-                                              ),
-                                              Expanded(
-                                                  flex: 2,
-                                                  child: TextView(
-                                                    text: controller.formatDate(
-                                                        controller
-                                                            .selectedLocker
-                                                            .value
-                                                            .dATETO!,
-                                                        format: "yyyy-MM-dd"),
-                                                    fontSize: 14,
-                                                  ))
-                                            ],
+                                          EntryWidget(
+                                            title: "Mode Operation",
+                                            value: controller.selectedLocker
+                                                .value.modeOfOperation,
                                           ),
-                                          SizedBox(
-                                            height: 5 * fem,
-                                          ),
-                                          Row(
-                                            children: [
-                                              const Expanded(
-                                                  child: TextView(
-                                                text: "Branch",
-                                                fontSize: 14,
-                                                color: ColorPallete.secondary,
-                                              )),
-                                              Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 10.0 * fem),
-                                                child:
-                                                    const TextView(text: ":"),
-                                              ),
-                                              Expanded(
-                                                  flex: 2,
-                                                  child: TextView(
-                                                    text: controller
-                                                        .selectedLocker
-                                                        .value
-                                                        .branch!
-                                                        .branchName!,
-                                                    fontSize: 14,
-                                                  ))
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 5 * fem,
-                                          ),
-                                          Row(
-                                            children: [
-                                              const Expanded(
-                                                  child: TextView(
-                                                text: "Status",
-                                                fontSize: 14,
-                                                color: ColorPallete.secondary,
-                                              )),
-                                              Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 10.0 * fem),
-                                                child:
-                                                    const TextView(text: ":"),
-                                              ),
-                                              Expanded(
-                                                flex: 2,
-                                                child: TextView(
-                                                  text: controller
-                                                      .selectedLocker
-                                                      .value
-                                                      .sTATUS!,
-                                                  fontSize: 14,
-                                                ),
-                                              )
-                                            ],
+                                          EntryWidget(
+                                            title: "Joint Member",
+                                            value: controller.selectedLocker
+                                                .value.joinMemberName,
                                           ),
                                         ],
                                       ),
@@ -271,149 +124,149 @@ class LockerDetailsScreen extends GetView<LockerController> {
                             SizedBox(
                               height: 5 * fem,
                             ),
-                            Padding(
-                              padding:
-                                  EdgeInsets.symmetric(horizontal: 10.0 * fem),
-                              child: const TextView(
-                                text: "Time In-Out History",
-                                fontSize: 16,
-                                color: ColorPallete.secondary,
-                                weight: FontWeight.w700,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 5 * fem,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10 * fem),
-                              child: RoundedContainer(
-                                radius: 15,
-                                borderColor: ColorPallete.primary,
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 5.0 * fem,
-                                      vertical: 10 * fem),
-                                  child: MyListView(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          "Date",
-                                          "Time In",
-                                          "Time Out",
-                                          "Remark"
-                                        ]
-                                            .map(
-                                              (e) => Expanded(
-                                                flex: ["Remark"].contains(e)
-                                                    ? 2
-                                                    : 1,
-                                                child: Padding(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 1.25 * fem),
-                                                  child: RoundedContainer(
-                                                    radius: 0,
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              vertical:
-                                                                  5.0 * fem),
-                                                      child: TextView(
-                                                        text: e,
-                                                        alignment:
-                                                            TextAlign.center,
-                                                        weight: FontWeight.bold,
-                                                        color: ColorPallete
-                                                            .secondary,
-                                                        fontSize: 14,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            )
-                                            .toList(),
-                                      ),
-                                      SizedBox(
-                                        height: 5 * fem,
-                                      ),
-                                      RoundedContainer(
-                                        radius: 15,
-                                        child: MyListView(
-                                          children: controller
-                                              .selectedLocker.value.lockerData!
-                                              .map((e) => Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical:
-                                                                2.5 * fem),
-                                                    child: Row(
-                                                      children: [
-                                                        Expanded(
-                                                          child: TextView(
-                                                            text: controller
-                                                                .formatDate(
-                                                                    e.tRNDATE,
-                                                                    format:
-                                                                        "yyyy-MM-dd"),
-                                                            alignment: TextAlign
-                                                                .center,
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          width: 2.5 * fem,
-                                                        ),
-                                                        Expanded(
-                                                          child: TextView(
-                                                            text: controller
-                                                                .formatTime(
-                                                                    e.tIMEIN,
-                                                                    format:
-                                                                        "yyyy-MM-dd hh:mm:ss"),
-                                                            alignment: TextAlign
-                                                                .center,
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          width: 2.5 * fem,
-                                                        ),
-                                                        Expanded(
-                                                          child: TextView(
-                                                            text: controller
-                                                                .formatTime(
-                                                                    e.tIMEOUT,
-                                                                    format:
-                                                                        "yyyy-MM-dd hh:mm:ss"),
-                                                            alignment: TextAlign
-                                                                .center,
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          width: 2.5 * fem,
-                                                        ),
-                                                        Expanded(
-                                                          flex: 2,
-                                                          child: TextView(
-                                                            text: e.rEMARKS
-                                                                .toString(),
-                                                            alignment: TextAlign
-                                                                .center,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ))
-                                              .toList(),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            )
+                            // Padding(
+                            //   padding:
+                            //       EdgeInsets.symmetric(horizontal: 10.0 * fem),
+                            //   child: const TextView(
+                            //     text: "Time In-Out History",
+                            //     fontSize: 16,
+                            //     color: ColorPallete.secondary,
+                            //     weight: FontWeight.w700,
+                            //   ),
+                            // ),
+                            // SizedBox(
+                            //   height: 5 * fem,
+                            // ),
+                            // Padding(
+                            //   padding: EdgeInsets.all(10 * fem),
+                            //   child: RoundedContainer(
+                            //     radius: 15,
+                            //     borderColor: ColorPallete.primary,
+                            //     child: Padding(
+                            //       padding: EdgeInsets.symmetric(
+                            //           horizontal: 5.0 * fem,
+                            //           vertical: 10 * fem),
+                            //       child: MyListView(
+                            //         children: [
+                            //           Row(
+                            //             mainAxisAlignment:
+                            //                 MainAxisAlignment.center,
+                            //             crossAxisAlignment:
+                            //                 CrossAxisAlignment.center,
+                            //             children: [
+                            //               "Date",
+                            //               "Time In",
+                            //               "Time Out",
+                            //               "Remark"
+                            //             ]
+                            //                 .map(
+                            //                   (e) => Expanded(
+                            //                     flex: ["Remark"].contains(e)
+                            //                         ? 2
+                            //                         : 1,
+                            //                     child: Padding(
+                            //                       padding: EdgeInsets.symmetric(
+                            //                           horizontal: 1.25 * fem),
+                            //                       child: RoundedContainer(
+                            //                         radius: 0,
+                            //                         child: Padding(
+                            //                           padding:
+                            //                               EdgeInsets.symmetric(
+                            //                                   vertical:
+                            //                                       5.0 * fem),
+                            //                           child: TextView(
+                            //                             text: e,
+                            //                             alignment:
+                            //                                 TextAlign.center,
+                            //                             weight: FontWeight.bold,
+                            //                             color: ColorPallete
+                            //                                 .secondary,
+                            //                             fontSize: 14,
+                            //                           ),
+                            //                         ),
+                            //                       ),
+                            //                     ),
+                            //                   ),
+                            //                 )
+                            //                 .toList(),
+                            //           ),
+                            //           SizedBox(
+                            //             height: 5 * fem,
+                            //           ),
+                            //           RoundedContainer(
+                            //             radius: 15,
+                            //             child: MyListView(
+                            //               children: controller
+                            //                   .selectedLocker.value.lockerData!
+                            //                   .map((e) => Padding(
+                            //                         padding:
+                            //                             EdgeInsets.symmetric(
+                            //                                 vertical:
+                            //                                     2.5 * fem),
+                            //                         child: Row(
+                            //                           children: [
+                            //                             Expanded(
+                            //                               child: TextView(
+                            //                                 text: controller
+                            //                                     .formatDate(
+                            //                                         e.tRNDATE,
+                            //                                         format:
+                            //                                             "yyyy-MM-dd"),
+                            //                                 alignment: TextAlign
+                            //                                     .center,
+                            //                               ),
+                            //                             ),
+                            //                             SizedBox(
+                            //                               width: 2.5 * fem,
+                            //                             ),
+                            //                             Expanded(
+                            //                               child: TextView(
+                            //                                 text: controller
+                            //                                     .formatTime(
+                            //                                         e.tIMEIN,
+                            //                                         format:
+                            //                                             "yyyy-MM-dd hh:mm:ss"),
+                            //                                 alignment: TextAlign
+                            //                                     .center,
+                            //                               ),
+                            //                             ),
+                            //                             SizedBox(
+                            //                               width: 2.5 * fem,
+                            //                             ),
+                            //                             Expanded(
+                            //                               child: TextView(
+                            //                                 text: controller
+                            //                                     .formatTime(
+                            //                                         e.tIMEOUT,
+                            //                                         format:
+                            //                                             "yyyy-MM-dd hh:mm:ss"),
+                            //                                 alignment: TextAlign
+                            //                                     .center,
+                            //                               ),
+                            //                             ),
+                            //                             SizedBox(
+                            //                               width: 2.5 * fem,
+                            //                             ),
+                            //                             Expanded(
+                            //                               flex: 2,
+                            //                               child: TextView(
+                            //                                 text: e.rEMARKS
+                            //                                     .toString(),
+                            //                                 alignment: TextAlign
+                            //                                     .center,
+                            //                               ),
+                            //                             ),
+                            //                           ],
+                            //                         ),
+                            //                       ))
+                            //                   .toList(),
+                            //             ),
+                            //           )
+                            //         ],
+                            //       ),
+                            //     ),
+                            //   ),
+                            // )
                           ],
                         ),
                 ),
@@ -421,6 +274,44 @@ class LockerDetailsScreen extends GetView<LockerController> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class EntryWidget extends StatelessWidget {
+  final String title;
+  final String? value;
+  const EntryWidget({super.key, required this.title, this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    double baseWidth = 360;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 7.5 * fem),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+              child: TextView(
+            text: title,
+            fontSize: 14,
+            color: ColorPallete.secondary,
+          )),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 5.0 * fem),
+            child: const TextView(text: ":"),
+          ),
+          Expanded(
+              flex: 2,
+              child: TextView(
+                text: value?.capitalize ?? "N/A",
+                fontSize: 14,
+                overflow: TextOverflow.ellipsis,
+                weight: FontWeight.bold,
+              ))
+        ],
       ),
     );
   }

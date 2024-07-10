@@ -85,7 +85,11 @@ class ApiProvider extends GetxService with ApiClient {
 
     try {
       var result;
-      print(_httpClient.options.baseUrl + endpoint);
+      if (kDebugMode) {
+        // ignore: prefer_interpolation_to_compose_strings
+        print(Urls.getApiUrl(endpoint));
+        print(data);
+      }
       switch (method) {
         case "GET":
           result = await _httpClient.get(url.path);
@@ -124,13 +128,8 @@ class ApiProvider extends GetxService with ApiClient {
           return ApiResponse.error(
               ex.response!.data["message"], Error.DATA_FETCH_ERROR);
         default:
-      }
-
-      if ((endpoint as String).contains("redeem/redeem-points")) {
-        return ApiResponse.error(
-            ex.response!.data["error"], Error.DATA_FETCH_ERROR);
-      } else {
-        throw Exception(ex.message);
+          log(ex.response!.data);
+          return ApiResponse.error(ex.response!.data, Error.DATA_FETCH_ERROR);
       }
     }
   }

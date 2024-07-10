@@ -16,10 +16,13 @@ class EventsController extends GetxController {
     fetchEvents();
   }
 
+  RxBool isLoading = false.obs;
   RxList<Event> events = <Event>[].obs;
 
   void fetchEvents() async {
+    isLoading.value = true;
     await _featureRepository.fetchEvents().then((value) {
+      isLoading.value = false;
       events.value = value.data;
       events.refresh();
     });

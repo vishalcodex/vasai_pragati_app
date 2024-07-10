@@ -11,8 +11,8 @@ import '../../../deposit/widgets/acc_card .dart';
 import '../../controllers/loan_controller.dart';
 import '../details_alert.dart';
 
-class PersonalLoansView extends GetView<LoanController> {
-  const PersonalLoansView({super.key});
+class OverDraftLoansView extends GetView<LoanController> {
+  const OverDraftLoansView({super.key});
 
   @override
   Widget build(BuildContext context) {

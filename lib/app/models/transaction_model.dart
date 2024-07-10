@@ -14,6 +14,7 @@ class Transaction {
   String? chqNo;
   String? amount;
   String? balance;
+  String? total;
   String? printed;
   String? println;
   String? cramount;
@@ -56,6 +57,7 @@ class Transaction {
       this.chqNo,
       this.amount,
       this.balance,
+      this.total,
       this.printed,
       this.println,
       this.cramount,
@@ -98,6 +100,7 @@ class Transaction {
     chqNo = json['chq_no'];
     amount = json['amount'];
     balance = json['balance'];
+    total = json['total'];
     printed = json['printed'];
     println = json['println'];
     cramount = json['cramount'];
@@ -142,6 +145,7 @@ class Transaction {
     data['chq_no'] = this.chqNo;
     data['amount'] = this.amount;
     data['balance'] = this.balance;
+    data['total'] = this.total;
     data['printed'] = this.printed;
     data['println'] = this.println;
     data['cramount'] = this.cramount;

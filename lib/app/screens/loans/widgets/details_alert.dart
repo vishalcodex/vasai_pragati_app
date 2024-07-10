@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vasai_pragati/common/color_pallete.dart';
 
 import 'deposit/deposit_loan_detail_view.dart';
 import 'gold/gold_loan_detail_view.dart';
@@ -15,8 +16,10 @@ class DetailsAlert extends StatelessWidget {
     double fem = MediaQuery.of(context).size.width / baseWidth;
     // double ffem = fem * 0.97;
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15.0 * fem, vertical: 30 * fem),
+      padding: EdgeInsets.symmetric(horizontal: 15.0 * fem, vertical: 20 * fem),
       child: Dialog(
+        backgroundColor: ColorPallete.theme,
+        surfaceTintColor: ColorPallete.theme,
         insetPadding: EdgeInsets.zero,
         child: Padding(
           padding:

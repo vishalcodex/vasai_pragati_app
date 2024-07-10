@@ -24,10 +24,13 @@ class PersonalLoanDetailView extends GetView<LoanController> {
             value: controller.selectedAccount.value.accountName!.capitalize!),
         const DetailEntryWidget(title: "Purpose", value: "Personal Loan"),
         DetailEntryWidget(
+            title: "Sanctioned Date",
+            value: controller.selectedAccount.value.loanMaster!.sanctiondt!),
+        DetailEntryWidget(
             title: "Sanctioned Amount",
             value: "${controller.selectedAccount.value.loanMaster!.amount!}/-"),
         DetailEntryWidget(
-            title: "Balance",
+            title: "Current Balance",
             value:
                 "${controller.selectedAccount.value.loanMaster!.lcbalance}/-"),
         DetailEntryWidget(

@@ -19,7 +19,7 @@ class EMICalculatorScreen extends GetView<HomeController> {
     double baseWidth = 360;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     return Scaffold(
-      backgroundColor: ColorPallete.theme,
+      // backgroundColor: ColorPallete.primary,
       body: SafeArea(
           child: Scaffold(
         appBar: PreferredSize(
@@ -151,6 +151,7 @@ class EMICalculatorScreen extends GetView<HomeController> {
                                   ),
                                   RoundedContainer(
                                     radius: 10,
+                                    height: 45,
                                     borderColor: ColorPallete.grey,
                                     clip: Clip.antiAliasWithSaveLayer,
                                     child: Row(
@@ -362,6 +363,26 @@ class EMICalculatorScreen extends GetView<HomeController> {
                         ),
                       )
                     ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 15.0 * fem, vertical: 10 * fem),
+                  child: InkWell(
+                    onTap: () {},
+                    child: const RoundedContainer(
+                      radius: 10,
+                      height: 45,
+                      color: ColorPallete.primary,
+                      child: Center(
+                        child: TextView(
+                          text: "View Rate Of Interest",
+                          color: ColorPallete.theme,
+                          fontSize: 14,
+                          weight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                   ),
                 )
               ],

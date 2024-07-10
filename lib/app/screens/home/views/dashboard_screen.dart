@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:marquee/marquee.dart';
 
 import '../../../../common/color_pallete.dart';
@@ -54,12 +55,18 @@ class MainScreen extends GetView<HomeController> {
               //     width: 25 * fem,
               //   ),
               // ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.0 * fem),
-                child: Image.asset(
-                  "assets/ui/notification.png",
-                  height: 25 * fem,
-                  width: 25 * fem,
+              InkWell(
+                onTap: () {
+                  controller.fetchNotifications();
+                  Get.toNamed(Routes.NOTIFICATIONS);
+                },
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5.0 * fem),
+                  child: Image.asset(
+                    "assets/ui/notification.png",
+                    height: 25 * fem,
+                    width: 25 * fem,
+                  ),
                 ),
               ),
 
@@ -118,8 +125,9 @@ class MainScreen extends GetView<HomeController> {
                                                   SizedBox(
                                                     height: 5 * fem,
                                                   ),
-                                                  const TextView(
-                                                    text: "Good Morning.",
+                                                  TextView(
+                                                    text:
+                                                        "Good ${controller.greetings.value}.",
                                                     color:
                                                         ColorPallete.secondary,
                                                     fontSize: 14,
@@ -147,8 +155,8 @@ class MainScreen extends GetView<HomeController> {
                                               .capitalize!,
                                           accountId:
                                               controller.user.value.sbaccountId,
-                                          balance:
-                                              controller.user.value.balance),
+                                          balance: controller
+                                              .user.value.livebalance),
                                       SizedBox(
                                         height: 15 * fem,
                                       ),
@@ -255,9 +263,21 @@ class MainScreen extends GetView<HomeController> {
                                                                     .withOpacity(
                                                                         0.1))
                                                           ]),
-                                                      child: Image.network(
-                                                        e.image!,
+                                                      child: CachedNetworkImage(
+                                                        imageUrl: e.image!,
                                                         fit: BoxFit.fill,
+                                                        errorWidget: (context,
+                                                            url, error) {
+                                                          return Padding(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    10.0 * fem),
+                                                            child: Image.asset(
+                                                              "assets/ui/logo.png",
+                                                              // fit: BoxFit.fill,
+                                                            ),
+                                                          );
+                                                        },
                                                       ),
                                                     ),
                                                   ),
@@ -330,7 +350,8 @@ class MainScreen extends GetView<HomeController> {
                                         height: 20 * fem,
                                       ),
                                       GridView.count(
-                                        physics: NeverScrollableScrollPhysics(),
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
                                         shrinkWrap: true,
                                         crossAxisCount: 3,
                                         mainAxisSpacing: 10 * fem,
@@ -384,7 +405,39 @@ class MainScreen extends GetView<HomeController> {
                                         }).toList(),
                                       ),
                                       SizedBox(
-                                        height: 10 * fem,
+                                        height: 15 * fem,
+                                      ),
+                                      Divider(
+                                        height: 5 * fem,
+                                        thickness: 5 * fem,
+                                        color:
+                                            ColorPallete.grey.withOpacity(0.2),
+                                      ),
+                                      SizedBox(
+                                        height: 15 * fem,
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          Get.toNamed(Routes.SUMMARY);
+                                        },
+                                        child: RoundedContainer(
+                                          radius: 10,
+                                          color: ColorPallete.primary,
+                                          child: Padding(
+                                            padding: EdgeInsets.all(15.0 * fem),
+                                            child: const Center(
+                                              child: TextView(
+                                                text: "Overall Account Summary",
+                                                color: ColorPallete.theme,
+                                                fontSize: 16,
+                                                weight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 15 * fem,
                                       ),
                                     ],
                                   ),
@@ -397,7 +450,7 @@ class MainScreen extends GetView<HomeController> {
                     ),
             ),
           ),
-          drawer: CustomDrawer(),
+          drawer: const CustomDrawer(),
         ),
       ),
     );
