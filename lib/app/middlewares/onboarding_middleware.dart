@@ -12,9 +12,9 @@ class OnBoardingMiddleWare extends GetMiddleware {
     // if (authService.showOnboarding) {
     //   return const RouteSettings(name: Routes.GET_STARTED);
     // } else
-    if (authService.token == null) {
+    if (authService.token == null || authService.token == "") {
       return RouteSettings(
-        name: authService.toRegister ? Routes.SIGN_IN : Routes.AUTH,
+        name: authService.isRegistered ? Routes.AUTH : Routes.SIGN_IN,
       );
     } else if (route! != Routes.HOME) {
       return const RouteSettings(name: Routes.HOME);

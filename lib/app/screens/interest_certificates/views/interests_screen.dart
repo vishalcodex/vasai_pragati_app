@@ -28,7 +28,7 @@ class InterestsScreen extends GetView<InterestsController> {
           ),
           backgroundColor: ColorPallete.theme,
           body: Container(
-            color: ColorPallete.grey.withOpacity(0.5),
+            color: ColorPallete.theme,
             child: Column(
               children: [
                 RoundedContainer(

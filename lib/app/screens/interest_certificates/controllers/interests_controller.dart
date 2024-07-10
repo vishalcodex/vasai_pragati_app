@@ -28,7 +28,7 @@ class InterestsController extends GetxController {
   void onInit() {
     super.onInit();
     last10Years.value = List.generate(
-        10,
+        2,
         (index) =>
             ("${DateTime.now().year - index - 1}-${DateTime.now().year - index}"));
     selectedYear.value = last10Years.first;

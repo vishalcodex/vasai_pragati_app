@@ -28,7 +28,7 @@ class TextView extends StatelessWidget {
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
     return Text(
-      text,
+      text.replaceAll(".00", ""),
       textAlign: alignment,
       maxLines: maxlines,
       overflow: overflow,

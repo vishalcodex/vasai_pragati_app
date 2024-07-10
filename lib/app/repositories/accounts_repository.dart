@@ -1,13 +1,13 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:vasai_pragati/app/models/interest_certificate_model.dart';
 
 import '../models/account_details.dart';
 import '../models/account_model.dart';
+import '../models/account_transaction.dart';
+import '../models/interest_certificate_model.dart';
 import '../models/locker_model.dart';
 import '../models/subgroup_model.dart';
 import '../models/api_response.dart';
-import '../models/transaction_model.dart';
 import '../providers/api_provider.dart';
 
 class AccountsRepository {
@@ -24,12 +24,20 @@ class AccountsRepository {
       if (value.status == Status.COMPLETED) {
         List<Account> accounts =
             (value.data as List).map((e) => Account.fromJson(e)).toList();
-        accounts =
-            accounts.length > 4 ? accounts.getRange(0, 4).toList() : accounts;
-        for (var account in accounts) {
-          await fetchAccountTransactions(account: account).then((value) {
-            account.transactions = value.data;
-          });
+
+        if (!["FD", "RD"].contains(subgroup.aliasName.toString().trim())) {
+          accounts =
+              accounts.length > 4 ? accounts.getRange(0, 4).toList() : accounts;
+          for (var account in accounts) {
+            await fetchAccountTransactions(account: account).then((value) {
+              if (value.status == Status.COMPLETED) {
+                account.transactions =
+                    (value.data as AccountTransaction).transactions;
+              } else {
+                account.transactions = [];
+              }
+            });
+          }
         }
         value.data = accounts;
       }
@@ -128,11 +136,7 @@ class AccountsRepository {
         .makeAPICall("POST", "all-account-details", body)
         .then((value) {
       if (value.status == Status.COMPLETED) {
-        List<Transaction> accounts =
-            (value.data["transactions"] as List).map((e) {
-          return Transaction.fromJson(e);
-        }).toList();
-        value.data = accounts;
+        value.data = AccountTransaction.fromJson(value.data);
       }
       return value;
     });

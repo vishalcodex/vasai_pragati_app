@@ -57,11 +57,13 @@ class DepositStatement {
                         crossAxisAlignment: pw.CrossAxisAlignment.center,
                         children: [
                           pw.SizedBox(
-                            height: 50,
-                            width: 50,
-                            // child: pw.Image(
-                            //   pw.MemoryImage(loadImage.buffer.asUint8List(loadImage.offsetInBytes, loadImage.lengthInBytes)),
-                            // ),
+                            height: 30,
+                            width: 30,
+                            child: pw.Image(
+                              pw.MemoryImage(loadImage.buffer.asUint8List(
+                                  loadImage.offsetInBytes,
+                                  loadImage.lengthInBytes)),
+                            ),
                           ),
                           pw.Text(
                               "VASAI PRAGATI CO-OPERATIVE CREDIT SOCIETY LTD., ARNALA",
@@ -70,11 +72,11 @@ class DepositStatement {
                           pw.SizedBox(
                             height: 30,
                             width: 30,
-                            child: pw.Image(
-                              pw.MemoryImage(loadImage.buffer.asUint8List(
-                                  loadImage.offsetInBytes,
-                                  loadImage.lengthInBytes)),
-                            ),
+                            // child: pw.Image(
+                            //   pw.MemoryImage(loadImage.buffer.asUint8List(
+                            //       loadImage.offsetInBytes,
+                            //       loadImage.lengthInBytes)),
+                            // ),
                           )
                         ]),
                     pw.SizedBox(height: 15),
@@ -197,9 +199,9 @@ class DepositStatement {
                       itemBuilder: (context, index) {
                         Transaction element =
                             selectedTransactions.elementAt(index);
-                        accBalance = element.crdb! == "C"
-                            ? accBalance + double.parse(element.amount!)
-                            : accBalance - double.parse(element.amount!);
+                        // accBalance = element.crdb! == "C"
+                        //     ? accBalance + double.parse(element.amount!)
+                        //     : accBalance - double.parse(element.amount!);
                         return pw.Container(
                           color: index % 2 == 1
                               ? PdfColors.grey200
@@ -269,7 +271,7 @@ class DepositStatement {
                                 pw.Expanded(
                                   child: pw.Center(
                                     child: pw.Text(
-                                      accBalance.toString(),
+                                      element.balance.toString(),
                                       maxLines: 3,
                                       style: style.copyWith(fontSize: 10),
                                     ),
@@ -397,10 +399,15 @@ class DepositStatement {
                     pw.SizedBox(height: 5),
                     pw.Divider(color: PdfColors.black, thickness: 1, height: 1),
                     pw.SizedBox(height: 5),
-                    pw.Row(children: [
-                      pw.Text("Page ${i + 1} of ${noPages.toInt()}",
-                          style: style)
-                    ])
+                    pw.Row(
+                        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                        children: [
+                          pw.Text(
+                              "This statement is auto generated from Vasai Pragati Mobile App.",
+                              style: style),
+                          pw.Text("Page ${i + 1} of ${noPages.toInt()}",
+                              style: style)
+                        ])
                   ]),
             );
           },

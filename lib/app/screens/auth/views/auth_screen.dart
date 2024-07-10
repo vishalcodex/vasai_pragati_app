@@ -190,12 +190,13 @@ class AuthScreen extends GetView<AuthController> {
                                             ),
                                             Expanded(
                                               child: MyTextField(
-                                                // initialValue:
-                                                //     controller.creds["phone"],
+                                                initialValue:
+                                                    controller.creds["phone"],
+                                                readOnly: true,
                                                 hintText: "hello@gmail.com",
                                                 fontSize: 16,
                                                 keyboardType:
-                                                    TextInputType.emailAddress,
+                                                    TextInputType.phone,
                                                 onChanged: (value) {
                                                   controller.creds["phone"] =
                                                       value;
@@ -381,10 +382,10 @@ class AuthScreen extends GetView<AuthController> {
                       // ),
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 5.0 * fem),
-                        child: const Center(
+                        child: Center(
                           child: TextView(
                             alignment: TextAlign.center,
-                            text: "Codex Tech - V 1.0.0",
+                            text: "Codex Tech - v${controller.version ?? "0"}",
                             color: ColorPallete.grey,
                             fontSize: 16,
                           ),

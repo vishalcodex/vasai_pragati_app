@@ -1,4 +1,5 @@
 import '../screens/deposit/views/multiple_accounts_screen.dart';
+import '../screens/deposit/widgets/closed_accounts_view.dart';
 import '../screens/home/views/emi_calculator_screen.dart';
 import '../screens/home/views/fd_calculator_screen.dart';
 import '../screens/home/views/my_profile.dart';
@@ -26,6 +27,9 @@ import '../screens/home/views/about_us_screen.dart';
 import '../screens/home/views/advertisement_screen.dart';
 import '../screens/home/views/contact_us_screen.dart';
 import '../screens/home/views/dashboard_screen.dart';
+import '../screens/home/views/notifiactions_screen.dart';
+import '../screens/home/views/overall_summary_screen.dart';
+import '../screens/home/views/rd_calculator_screen.dart';
 import '../screens/statement/binding/statement_binding.dart';
 import '../screens/statement/views/statmeent_screen.dart';
 import '../screens/interest_certificates/binding/interests_binding.dart';
@@ -66,6 +70,11 @@ class AppPages {
       page: () => MainScreen(),
       binding: HomeBinding(),
       middlewares: [OnBoardingMiddleWare()],
+    ),
+    GetPage(
+      name: Routes.NOTIFICATIONS,
+      page: () => NotifiactionScreen(),
+      binding: HomeBinding(),
     ),
     GetPage(
       name: Routes.AUTH,
@@ -208,6 +217,24 @@ class AppPages {
     GetPage(
       name: Routes.FD_CALCI,
       page: () => FixedDepositCalculator(),
+      binding: HomeBinding(),
+      // middlewares: [OnBoardingMiddleWare()],
+    ),
+    GetPage(
+      name: Routes.RD_CALCI,
+      page: () => RecurringDepositCalculator(),
+      binding: HomeBinding(),
+      // middlewares: [OnBoardingMiddleWare()],
+    ),
+    GetPage(
+      name: Routes.SUMMARY,
+      page: () => OverallSummaryScreen(),
+      binding: HomeBinding(),
+      // middlewares: [OnBoardingMiddleWare()],
+    ),
+    GetPage(
+      name: Routes.CLOSED_ACCOUNTS,
+      page: () => ClosedAccountsScreen(),
       binding: HomeBinding(),
       // middlewares: [OnBoardingMiddleWare()],
     ),

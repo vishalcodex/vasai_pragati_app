@@ -27,7 +27,10 @@ class SecuredLoanDetailView extends GetView<LoanController> {
             title: "Sanctioned Amount",
             value: "${controller.selectedAccount.value.loanMaster!.amount!}/-"),
         DetailEntryWidget(
-            title: "Balance",
+            title: "Sanctioned Amount",
+            value: "${controller.selectedAccount.value.loanMaster!.amount!}/-"),
+        DetailEntryWidget(
+            title: "Current Balance",
             value:
                 "${controller.selectedAccount.value.loanMaster!.lcbalance}/-"),
         DetailEntryWidget(

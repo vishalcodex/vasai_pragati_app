@@ -76,7 +76,7 @@ class LoanScreen extends GetView<LoanController> {
                                 .toList(),
                           )
                         : GridView.count(
-                            physics: NeverScrollableScrollPhysics(),
+                            // physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             crossAxisCount: 2,
                             mainAxisSpacing: 5 * fem,

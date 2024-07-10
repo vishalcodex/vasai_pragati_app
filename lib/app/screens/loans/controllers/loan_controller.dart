@@ -26,17 +26,21 @@ class LoanController extends GetxController {
   fetchSubgroupList() async {
     await _subgroupRepository.fetchSubgroups("loans").then((value) {
       loansList.value = value.data;
+      loansList
+          .add(Subgroup(subgroupId: "-1", subgroupName: "Close Loan Accounts"));
       loansList.refresh();
     });
   }
 
   void onLoanServiceClicked(Subgroup element) {
-    showTransactions.value = false;
+    showTransactions.value = true;
     selectedAccount.value = Account();
     fetchAccounts(element);
     Get.toNamed(Routes.LOAN_DETAILS, arguments: {"page_name": element});
   }
 
+  RxBool isLoading = false.obs;
+  RxBool noAccounts = false.obs;
   RxList<Account> accounts = <Account>[].obs;
   // RxList<Transaction> transactions = <Transaction>[].obs;
   Rx<Account> selectedAccount = Account().obs;
@@ -45,38 +49,28 @@ class LoanController extends GetxController {
   RxBool showTransactions = false.obs;
 
   fetchAccounts(Subgroup subgroup) async {
+    isLoading.value = true;
+    noAccounts.value = false;
     await _accountsRepository.fetchMyAccounts(subgroup).then((value) {
+      isLoading.value = false;
       accounts.value = value.data;
-      selectedAccount.value = accounts[0];
-
-      selectedAccount.refresh();
-      fetchAccountDetails(selectedAccount.value);
+      if (accounts.isNotEmpty) {
+        selectedAccount.value = accounts[0];
+        selectedAccount.refresh();
+        fetchAccountDetails(selectedAccount.value);
+      } else {
+        noAccounts.value = true;
+      }
     });
   }
 
   fetchAccountDetails(Account account) async {
+    isLoading.value = true;
     await _accountsRepository.fetchAccountDetails(account).then((value) {
+      isLoading.value = false;
       accountDetails.value = value.data;
 
       accountDetails.refresh();
-    });
-  }
-
-  RxString fromDate = "".obs;
-  RxString toDate = "".obs;
-  RxBool isLoading = false.obs;
-
-  void downloadStatement(pageName) {
-    isLoading.value = true;
-    Future.delayed(const Duration(seconds: 2), () {
-      Get.toNamed(Routes.CONGRATS, arguments: {
-        "message": "Dear user your statement has been downloaded successfully."
-      });
-      isLoading.value = false;
-      Future.delayed(const Duration(seconds: 2), () {
-        Get.back();
-        Get.back();
-      });
     });
   }
 }

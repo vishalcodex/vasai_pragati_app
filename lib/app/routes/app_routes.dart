@@ -17,11 +17,13 @@ class Routes {
   static const CONTACT_US = '/contact_us';
 
   static const HOME = '/home';
+  static const NOTIFICATIONS = '/notifications';
   static const ADVERTISEMENT = '/advertisement';
   static const STATEMENT = '/statement';
   static const DEPOSIT = '/deposit';
   static const MULTIPLE_AACOUNTS = '/deposit_accounts_screen';
   static const DEPOSIT_DETAILS = '/deposit_details';
+  static const CLOSED_ACCOUNTS = '/closed_accounts';
   static const EVENTS = '/events';
   static const EVENTS_DETAILS = '/events_details';
   static const LOAN = '/loan';
@@ -31,4 +33,6 @@ class Routes {
   static const LOCKER_DETAILS = '/locker_details';
   static const EMI_CALCI = '/emi_calculator';
   static const FD_CALCI = '/fd_calculator';
+  static const RD_CALCI = '/rd_calculator';
+  static const SUMMARY = '/overall_summary';
 }

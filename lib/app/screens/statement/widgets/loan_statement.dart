@@ -61,11 +61,13 @@ class LoanStatement {
                         crossAxisAlignment: pw.CrossAxisAlignment.center,
                         children: [
                           pw.SizedBox(
-                            height: 50,
-                            width: 50,
-                            // child: pw.Image(
-                            //   pw.MemoryImage(loadImage.buffer.asUint8List(loadImage.offsetInBytes, loadImage.lengthInBytes)),
-                            // ),
+                            height: 30,
+                            width: 30,
+                            child: pw.Image(
+                              pw.MemoryImage(loadImage.buffer.asUint8List(
+                                  loadImage.offsetInBytes,
+                                  loadImage.lengthInBytes)),
+                            ),
                           ),
                           pw.Text(
                               "VASAI PRAGATI CO-OPERATIVE CREDIT SOCIETY LTD., ARNALA",
@@ -74,9 +76,9 @@ class LoanStatement {
                           pw.SizedBox(
                             height: 30,
                             width: 30,
-                            child: pw.Image(
-                              pw.MemoryImage(loadImage.buffer.asUint8List(loadImage.offsetInBytes, loadImage.lengthInBytes)),
-                            ),
+                            // child: pw.Image(
+                            //   pw.MemoryImage(loadImage.buffer.asUint8List(loadImage.offsetInBytes, loadImage.lengthInBytes)),
+                            // ),
                           )
                         ]),
                     pw.SizedBox(height: 15),
@@ -166,7 +168,9 @@ class LoanStatement {
                                   pw.Text("SanctionDt",
                                       textAlign: pw.TextAlign.left,
                                       style: style),
-                                  pw.Text(account.loanMaster!.sanctiondt!,
+                                  pw.Text(
+                                    DateFormat("dd/MM/yyy").format(DateFormat("yyyy-MM-dd").parse( account.loanMaster!.sanctiondt!)) 
+                                   ,
                                       textAlign: pw.TextAlign.left,
                                       style: style),
                                 ]),
@@ -200,14 +204,8 @@ class LoanStatement {
                     pw.SizedBox(height: 5),
                     // NAME
                     pw.Row(children: [
-                      pw.Text("Acc. Holder Name : ${account.accountName!.toUpperCase()}",
-                          textAlign: pw.TextAlign.left, style: style),
-                    ]),
-                    pw.SizedBox(height: 5),
-                    // NAME
-                    pw.Row(children: [
                       pw.Text(
-                          "Guaranter 1 : ${account.loanMaster?.gr1RegNo ?? ""}",
+                          "Acc. Holder Name : ${account.accountName!.toUpperCase()}",
                           textAlign: pw.TextAlign.left,
                           style: style),
                     ]),
@@ -215,7 +213,7 @@ class LoanStatement {
                     // NAME
                     pw.Row(children: [
                       pw.Text(
-                          "Guaranter 2 : ${account.loanMaster?.gr2RegNo ?? ""}",
+                          "Guaranter 1 : ${account.loanMaster?.gr1Name ?? ""}",
                           textAlign: pw.TextAlign.left,
                           style: style),
                     ]),
@@ -223,10 +221,70 @@ class LoanStatement {
                     // NAME
                     pw.Row(children: [
                       pw.Text(
-                          "Guaranter 3 : ${account.loanMaster?.gr3RegNo ?? ""}",
+                          "Guaranter 2 : ${account.loanMaster?.gr2Name ?? ""}",
                           textAlign: pw.TextAlign.left,
                           style: style),
                     ]),
+                    pw.SizedBox(height: 5),
+                    // NAME
+                    pw.Row(children: [
+                      pw.Text(
+                          "Guaranter 3 : ${account.loanMaster?.gr3Name ?? ""}",
+                          textAlign: pw.TextAlign.left,
+                          style: style),
+                    ]),
+                    pw.SizedBox(height: 5),
+                    // Overdue_amount
+                    //  - Overdue_interest
+                    //  - Surcharge
+                    //  - Penalty
+                    pw.Row(
+                        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: pw.CrossAxisAlignment.center,
+                        children: [
+                          pw.Expanded(
+                            flex: 3,
+                            child: pw.Text(
+                                "Overdue Amount : ${account.loanMaster!.overdue}",
+                                textAlign: pw.TextAlign.left,
+                                style: style),
+                          ),
+                          pw.Expanded(
+                            flex: 3,
+                            child: pw.Text(
+                                "Overdue Months : ${account.loanMaster!.eOverduemonths}",
+                                textAlign: pw.TextAlign.left,
+                                style: style),
+                          ),
+                          pw.Expanded(
+                            flex: 3,
+                            child: pw.Text(
+                                "Overdue Interest : ${account.loanMaster!.overdue}",
+                                textAlign: pw.TextAlign.left,
+                                style: style),
+                          ),
+                          pw.Expanded(
+                            flex: 2,
+                            child: pw.Text(
+                                "Surcharge : ${account.loanMaster!.surchargerate ?? 0}",
+                                textAlign: pw.TextAlign.left,
+                                style: style),
+                          ),
+                          pw.Expanded(
+                            flex: 2,
+                            child: pw.Text(
+                                "Penalty : ${account.loanMaster!.penalty ?? 0}",
+                                textAlign: pw.TextAlign.left,
+                                style: style),
+                          ),
+                          pw.Expanded(
+                            flex: 2,
+                            child: pw.Text(
+                                "Notice Fee : ${account.loanMaster!.noticefee ?? 0}",
+                                textAlign: pw.TextAlign.left,
+                                style: style),
+                          ),
+                        ]),
                     pw.SizedBox(height: 15),
                     pw.Divider(color: PdfColors.black, thickness: 1, height: 1),
                     //HEADER
@@ -357,9 +415,7 @@ class LoanStatement {
                       itemBuilder: (context, index) {
                         Transaction element =
                             selectedTransactions.elementAt(index);
-                        accBalance = element.crdb! == "C"
-                            ? accBalance + double.parse(element.cramount!)
-                            : accBalance - double.parse(element.dramount!);
+
                         return pw.Container(
                           color: index % 2 == 1
                               ? PdfColors.grey200
@@ -394,13 +450,13 @@ class LoanStatement {
                                 //TRANSACTION
                                 pw.Expanded(
                                   flex: 2,
-                                  child: pw.Text(
-                                    (((element.nARRATION ?? "") == "")
-                                            ? element.shNarration
-                                            : element.nARRATION)
-                                        .toString(),
-                                    textAlign: pw.TextAlign.left,
-                                    style: style.copyWith(fontSize: 9.5),
+                                  child: pw.Padding(
+                                    padding: const pw.EdgeInsets.only(left: 5),
+                                    child: pw.Text(
+                                      "${element.shNarration}: ${element.nARRATION}",
+                                      textAlign: pw.TextAlign.left,
+                                      style: style.copyWith(fontSize: 9.5),
+                                    ),
                                   ),
                                 ),
                                 //INTEREST
@@ -481,7 +537,7 @@ class LoanStatement {
                                   flex: 2,
                                   child: pw.Center(
                                     child: pw.Text(
-                                      element.amount!,
+                                      element.total.toString(),
                                       maxLines: 3,
                                       style: style.copyWith(fontSize: 9.5),
                                     ),
@@ -492,7 +548,7 @@ class LoanStatement {
                                   flex: 2,
                                   child: pw.Center(
                                     child: pw.Text(
-                                      accBalance.toString(),
+                                      element.balance.toString(),
                                       maxLines: 3,
                                       style: style.copyWith(fontSize: 9.5),
                                     ),
@@ -768,10 +824,15 @@ class LoanStatement {
                     pw.SizedBox(height: 5),
                     pw.Divider(color: PdfColors.black, thickness: 1, height: 1),
                     pw.SizedBox(height: 5),
-                    pw.Row(children: [
-                      pw.Text("Page ${i + 1} of ${noPages.toInt()}",
-                          style: style)
-                    ])
+                    pw.Row(
+                        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                        children: [
+                          pw.Text(
+                              "This statement is auto generated from Vasai Pragati Mobile App.",
+                              style: style),
+                          pw.Text("Page ${i + 1} of ${noPages.toInt()}",
+                              style: style)
+                        ])
                   ]),
             );
           },

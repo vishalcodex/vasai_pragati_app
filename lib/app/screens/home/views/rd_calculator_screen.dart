@@ -11,8 +11,8 @@ import '../../../components/ui/text_field.dart';
 import '../../../components/ui/text_view.dart';
 import '../controllers/home_controller.dart';
 
-class FixedDepositCalculator extends GetView<HomeController> {
-  const FixedDepositCalculator({super.key});
+class RecurringDepositCalculator extends GetView<HomeController> {
+  const RecurringDepositCalculator({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class FixedDepositCalculator extends GetView<HomeController> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size(0, 50 * fem),
-        child: CustomAppBar(pageName: "Fixed Deposit Calculator"),
+        child: CustomAppBar(pageName: "Recurring Deposit Calculator"),
       ),
       backgroundColor: ColorPallete.theme,
       body: Column(
@@ -71,11 +71,13 @@ class FixedDepositCalculator extends GetView<HomeController> {
                                               onTap: () {
                                                 controller.customerType.value =
                                                     e;
-                                                controller.fdInterest.value
+                                                controller.rdInterest.value
                                                     .interest = null;
                                                 controller.customerType
                                                     .refresh();
-                                                controller.fdInterest.refresh();
+                                                controller.customerType
+                                                    .refresh();
+                                                controller.rdInterest.refresh();
                                               },
                                               child: Row(
                                                 children: [
@@ -149,7 +151,7 @@ class FixedDepositCalculator extends GetView<HomeController> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     const TextView(
-                                      text: "Date Of Fixed Deposit",
+                                      text: "Date Of Recurring Deposit",
                                       color: ColorPallete.secondary,
                                       fontSize: 14,
                                     ),
@@ -195,10 +197,10 @@ class FixedDepositCalculator extends GetView<HomeController> {
                                             onChanged: (value) {
                                               controller.fdAmount.value =
                                                   double.parse(value);
-                                              controller.fdInterest.value
+                                              controller.rdInterest.value
                                                   .interest = null;
-                                              controller.fdInterest.refresh();
-                                              // controller.fdAmount.refresh();
+                                              controller.rdInterest.refresh();
+                                              controller.fdAmount.refresh();
                                             },
                                           ),
                                         ),
@@ -241,9 +243,9 @@ class FixedDepositCalculator extends GetView<HomeController> {
                                             onChanged: (value) {
                                               controller.tenure.value =
                                                   int.parse(value);
-                                              controller.fdInterest.value
+                                              controller.rdInterest.value
                                                   .interest = null;
-                                              controller.fdInterest.refresh();
+                                              controller.rdInterest.refresh();
                                             },
                                           ),
                                         ),
@@ -262,7 +264,7 @@ class FixedDepositCalculator extends GetView<HomeController> {
                     ],
                   ),
                 ),
-                Obx(() => controller.fdInterest.value.interest != null
+                Obx(() => controller.rdInterest.value.interest != null
                     ? Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: 15.0 * fem, vertical: 10 * fem),
@@ -288,7 +290,7 @@ class FixedDepositCalculator extends GetView<HomeController> {
                                         height: 5 * fem,
                                       ),
                                       const TextView(
-                                        text: "FD Maturity Details",
+                                        text: "RD Maturity Details",
                                         fontSize: 14,
                                         color: ColorPallete.secondary,
                                         weight: FontWeight.bold,
@@ -296,8 +298,12 @@ class FixedDepositCalculator extends GetView<HomeController> {
                                       SizedBox(
                                         height: 10 * fem,
                                       ),
+                                      _getEntry("Deposit Amount",
+                                          "₹ ${(controller.fdAmount.value * controller.tenure.value).toStringAsFixed(0)} /-"),
+                                      _getEntry("No. of Installments",
+                                          "${controller.tenure.value}"),
                                       _getEntry("Rate Of Interest*",
-                                          "${controller.fdInterest.value.interest} %"),
+                                          "${controller.rdInterest.value.interest} %"),
                                       _getEntry(
                                         "Maturity Date",
                                         DateFormat("dd MMM yyyy").format(
@@ -309,9 +315,9 @@ class FixedDepositCalculator extends GetView<HomeController> {
                                         ),
                                       ),
                                       _getEntry("Maturity Value",
-                                          "₹ ${controller.getFDMaturityAmount().toStringAsFixed(0)} /-"),
+                                          "₹ ${((controller.fdAmount.value * controller.tenure.value) * (1 + (double.parse(controller.rdInterest.value.interest ?? "0.0") / 100))).toStringAsFixed(0)} /-"),
                                       _getEntry("Aggregate Interest Amount",
-                                          "₹ ${(controller.getFDMaturityAmount() - controller.fdAmount.value).toStringAsFixed(0)} /-"),
+                                          "₹ ${(controller.tenure.value * controller.fdAmount.value * ((double.parse(controller.rdInterest.value.interest ?? "0.0") / 100))).toStringAsFixed(0)} /-"),
                                     ],
                                   ),
                                 ),
@@ -328,7 +334,7 @@ class FixedDepositCalculator extends GetView<HomeController> {
             padding: const EdgeInsets.all(10.0),
             child: InkWell(
               onTap: () {
-                controller.fetchFDInterest();
+                controller.fetchRDInterest();
               },
               child: RoundedContainer(
                 radius: 10,

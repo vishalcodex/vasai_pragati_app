@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -52,9 +53,23 @@ class EventsDetails extends GetView<EventsController> {
                                   radius: 10,
                                   clip: Clip.antiAliasWithSaveLayer,
                                   borderColor: ColorPallete.primary,
-                                  child: Image.network(
-                                    controller.selectedValue.value.img!,
-                                    fit: BoxFit.fill,
+                                  child: RoundedContainer(
+                                    radius: 10,
+                                    clip: Clip.antiAliasWithSaveLayer,
+                                    child: Image.network(
+                                      controller.selectedValue.value.img!,
+                                      fit: BoxFit.fill,
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                        return Padding(
+                                          padding: EdgeInsets.all(10.0 * fem),
+                                          child: Image.asset(
+                                            "assets/ui/logo.png",
+                                            fit: BoxFit.fill,
+                                          ),
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                               )
@@ -135,13 +150,20 @@ class EventsDetails extends GetView<EventsController> {
                                 SizedBox(
                                   height: 10 * fem,
                                 ),
-                                TextView(
-                                  text: controller
+                                Html(
+                                  data: controller
                                       .selectedValue.value.description!,
-                                  fontSize: 14,
-                                  color: ColorPallete.secondary,
-                                  weight: FontWeight.w500,
-                                )
+                                  style: {
+                                    "body": Style(color: ColorPallete.secondary)
+                                  },
+                                ),
+                                // TextView(
+                                //   text: controller
+                                //       .selectedValue.value.description!,
+                                //   fontSize: 14,
+                                //   color: ColorPallete.secondary,
+                                //   weight: FontWeight.w500,
+                                // )
                               ],
                             ),
                           )

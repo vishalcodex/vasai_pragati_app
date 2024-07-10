@@ -376,8 +376,7 @@ class StatementScreen extends GetView<StatementController> {
                                                                 fontSize: 18,
                                                                 color: ColorPallete
                                                                     .secondary,
-                                                                text:
-                                                                    e.amount!),
+                                                                text: e.total!),
                                                             Padding(
                                                               padding: EdgeInsets
                                                                   .only(

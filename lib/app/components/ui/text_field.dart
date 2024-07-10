@@ -42,7 +42,7 @@ class MyTextField extends StatelessWidget {
     return TextFormField(
       key: Key(initialValue ?? ""),
       onChanged: onChanged,
-      maxLines: maxLines,
+      maxLines: maxLines ?? 1,
       readOnly: readOnly ?? false,
       validator: validator,
       onFieldSubmitted: onSubmit,
