@@ -224,7 +224,7 @@ class LoanDetailsScreen extends GetView<LoanController> {
                                                                                             mainAxisAlignment: MainAxisAlignment.end,
                                                                                             crossAxisAlignment: CrossAxisAlignment.end,
                                                                                             children: [
-                                                                                              TextView(alignment: TextAlign.right, fontSize: 18, color: ColorPallete.secondary, text: e.total!),
+                                                                                              TextView(alignment: TextAlign.right, fontSize: 18, color: ColorPallete.secondary, text: e.amount!),
                                                                                               Padding(
                                                                                                 padding: EdgeInsets.only(bottom: 1.0 * fem),
                                                                                                 child: TextView(
