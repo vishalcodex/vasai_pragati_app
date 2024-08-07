@@ -25,9 +25,17 @@ class AccountsRepository {
         List<Account> accounts =
             (value.data as List).map((e) => Account.fromJson(e)).toList();
 
-        if (!["FD", "RD"].contains(subgroup.aliasName.toString().trim())) {
-          accounts =
-              accounts.length > 4 ? accounts.getRange(0, 4).toList() : accounts;
+        if (![
+          "FD",
+          "DD",
+          'MIDS',
+          'QIDS',
+          'SMD',
+          "RD",
+          "SHMD",
+        ].contains(subgroup.aliasName.toString().trim())) {
+          // accounts =
+          //     accounts.length > 4 ? accounts.getRange(0, 4).toList() : accounts;
           for (var account in accounts) {
             await fetchAccountTransactions(account: account).then((value) {
               if (value.status == Status.COMPLETED) {

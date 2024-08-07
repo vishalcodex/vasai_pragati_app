@@ -47,7 +47,11 @@ class DepositController extends GetxController {
     if ([
       "3", //"FD",
       "4", //"DD",
+      "5", //'MIDS'
+      "6", //'QIDS'
+      "7", //'SMD'
       "8", //"RD",
+      "21", //"SHMD",
     ].contains(element.subgroupId!.trim())) {
       Get.toNamed(Routes.MULTIPLE_AACOUNTS);
     } else {

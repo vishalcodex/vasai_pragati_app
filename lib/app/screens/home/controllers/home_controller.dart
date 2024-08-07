@@ -338,4 +338,15 @@ class HomeController extends GetxController {
             4 * tenure.value / 12);
     return value;
   }
+
+  double getRDMaturityAmount() {
+    double rdMAmount = 0;
+    for (var i = tenure.value; i > 0; i--) {
+      var amount = fdAmount.value *
+          pow(1 + (double.parse(rdInterest.value.interest ?? "0.0") / 100) / 4,
+              (4 * i / 12));
+      rdMAmount += amount;
+    }
+    return rdMAmount.round().toDouble();
+  }
 }
