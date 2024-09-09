@@ -29,7 +29,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace "com.codex.vasai_pragati"
+    namespace "com.codex.vasai.pragati"
     compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 

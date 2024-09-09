@@ -162,7 +162,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         onTap: () {
                           if (Platform.isAndroid || Platform.isIOS) {
                             final appId = Platform.isAndroid
-                                ? 'com.codex.vasai_pragati'
+                                ? 'com.codex.vasai.pragati'
                                 : 'YOUR_IOS_APP_ID';
                             final url = Uri.parse(
                               Platform.isAndroid
