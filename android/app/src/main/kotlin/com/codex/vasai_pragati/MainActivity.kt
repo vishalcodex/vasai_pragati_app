@@ -1,4 +1,4 @@
-package com.codex.vasai.pragati
+package com.codex.vasai_pragati
 
 import io.flutter.embedding.android.FlutterActivity
 import android.view.WindowManager.LayoutParams

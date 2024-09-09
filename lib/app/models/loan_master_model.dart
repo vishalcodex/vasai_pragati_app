@@ -42,8 +42,11 @@ class LoanMaster {
   String? severity;
   String? mark;
   String? gr1RegNo;
+  String? gr1Name;
   String? gr2RegNo;
+  String? gr2Name;
   String? gr3RegNo;
+  String? gr3Name;
   String? previousIntRate31052015;
   String? instAmount2;
   String? membregNo;
@@ -184,8 +187,11 @@ class LoanMaster {
     severity = json['severity'];
     mark = json['mark'];
     gr1RegNo = json['gr1_reg_no'];
+    gr1Name = json['gr1_member_name'];
     gr2RegNo = json['gr2_reg_no'];
+    gr2Name = json['gr2_member_name'];
     gr3RegNo = json['gr3_reg_no'];
+    gr3Name = json['gr3_member_name'];
     previousIntRate31052015 = json['previous_int_rate_31052015'];
     instAmount2 = json['inst_amount2'];
     membregNo = json['membreg_no'];
@@ -257,8 +263,11 @@ class LoanMaster {
     data['severity'] = this.severity;
     data['mark'] = this.mark;
     data['gr1_reg_no'] = this.gr1RegNo;
+    data['gr1'] = this.gr1Name;
     data['gr2_reg_no'] = this.gr2RegNo;
+    data['gr2'] = this.gr2Name;
     data['gr3_reg_no'] = this.gr3RegNo;
+    data['gr3'] = this.gr3Name;
     data['previous_int_rate_31052015'] = this.previousIntRate31052015;
     data['inst_amount2'] = this.instAmount2;
     data['membreg_no'] = this.membregNo;

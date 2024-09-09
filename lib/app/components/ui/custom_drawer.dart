@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../common/color_pallete.dart';
 import '../../routes/app_routes.dart';
 import '../../screens/home/controllers/home_controller.dart';
-import '../../services/auth_service.dart';
 import 'my_list_view.dart';
 import 'rounded_container.dart';
 import 'text_view.dart';
@@ -115,7 +115,7 @@ class CustomDrawer extends GetView<HomeController> {
               SizedBox(
                 height: 10 * fem,
               ),
-              Row(
+              const Row(
                 children: [
                   // TextView(
                   //   text:
@@ -130,7 +130,7 @@ class CustomDrawer extends GetView<HomeController> {
                   //     radius: 1.5 * fem,
                   //   ),
                   // ),
-                  const TextView(
+                  TextView(
                     text: "Personal",
                     color: ColorPallete.grey,
                     weight: FontWeight.w400,
@@ -194,6 +194,17 @@ class CustomDrawer extends GetView<HomeController> {
                     SizedBox(
                       height: 5 * fem,
                     ),
+                    DrawerItem(
+                        image: "assets/ui/dashboard_icon.png",
+                        title: "Visit Us",
+                        onPressed: () {
+                          launchUrl(
+                            Uri.parse("https://www.vasaipragati.com"),
+                          );
+                        }),
+                    SizedBox(
+                      height: 5 * fem,
+                    ),
                     // DrawerItem(
                     //     image: "assets/ui/settings.png",
                     //     title: "Terms & Conditions",
@@ -217,11 +228,12 @@ class CustomDrawer extends GetView<HomeController> {
               ),
               InkWell(
                 onTap: () async {
-                  await Get.find<AuthService>()
-                      .removeCurrentUser()
-                      .then((value) {
-                    Get.offAndToNamed(Routes.AUTH);
-                  });
+                  Get.offAndToNamed(Routes.AUTH);
+                  // await Get.find<AuthService>()
+                  //     .removeCurrentUser()
+                  //     .then((value) {
+
+                  // });
                 },
                 child: RoundedContainer(
                   radius: 10 * fem,

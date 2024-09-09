@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
@@ -19,7 +21,7 @@ class EMICalculatorScreen extends GetView<HomeController> {
     double baseWidth = 360;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     return Scaffold(
-      backgroundColor: ColorPallete.theme,
+      // backgroundColor: ColorPallete.primary,
       body: SafeArea(
           child: Scaffold(
         appBar: PreferredSize(
@@ -70,7 +72,11 @@ class EMICalculatorScreen extends GetView<HomeController> {
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 10.0 * fem),
                                       child: MyTextField(
-                                        keyboardType: TextInputType.number,
+                                        keyboardType: Platform.isAndroid
+                                            ? TextInputType.number
+                                            : const TextInputType
+                                                .numberWithOptions(
+                                                signed: true),
                                         initialValue:
                                             controller.amount.value.toString(),
                                         hintText: "Your Amount",
@@ -118,6 +124,11 @@ class EMICalculatorScreen extends GetView<HomeController> {
                                         initialValue: controller.interest.value
                                             .toString(),
                                         hintText: "Your Interest",
+                                        keyboardType: Platform.isAndroid
+                                            ? TextInputType.number
+                                            : const TextInputType
+                                                .numberWithOptions(
+                                                signed: true),
                                         onSubmit: (value) {
                                           controller.interest.value =
                                               double.parse(value);
@@ -151,6 +162,7 @@ class EMICalculatorScreen extends GetView<HomeController> {
                                   ),
                                   RoundedContainer(
                                     radius: 10,
+                                    height: 45,
                                     borderColor: ColorPallete.grey,
                                     clip: Clip.antiAliasWithSaveLayer,
                                     child: Row(
@@ -165,6 +177,11 @@ class EMICalculatorScreen extends GetView<HomeController> {
                                               initialValue: controller
                                                   .tenure.value
                                                   .toString(),
+                                              keyboardType: Platform.isAndroid
+                                                  ? TextInputType.number
+                                                  : const TextInputType
+                                                      .numberWithOptions(
+                                                      signed: true),
                                               onSubmit: (value) {
                                                 controller.tenure.value =
                                                     int.parse(value);
@@ -362,6 +379,26 @@ class EMICalculatorScreen extends GetView<HomeController> {
                         ),
                       )
                     ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 15.0 * fem, vertical: 10 * fem),
+                  child: InkWell(
+                    onTap: () {},
+                    child: const RoundedContainer(
+                      radius: 10,
+                      height: 45,
+                      color: ColorPallete.primary,
+                      child: Center(
+                        child: TextView(
+                          text: "View Rate Of Interest",
+                          color: ColorPallete.theme,
+                          fontSize: 14,
+                          weight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                   ),
                 )
               ],

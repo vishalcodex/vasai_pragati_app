@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:vasai_pragati/app/models/account_transaction.dart';
 import 'package:vasai_pragati/app/screens/statement/widgets/deposit_statement.dart';
 import 'package:vasai_pragati/app/screens/statement/widgets/loan_statement.dart';
 
@@ -73,7 +74,9 @@ class StatementController extends GetxController {
       isLoading.value = false;
       if (value.status == Status.COMPLETED) {
         hasStatement.value = true;
-        transactions.value = value.data;
+        AccountTransaction accountTransaction = value.data;
+        transactions.value = accountTransaction.transactions;
+        selectedAccount.value.branchId = accountTransaction.branch.branchName!;
         transactions.refresh();
       } else {}
     });

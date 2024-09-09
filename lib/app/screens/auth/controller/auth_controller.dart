@@ -32,16 +32,21 @@ class AuthController extends GetxController {
 
   var creds = {
     "email": "karomhatre@gmail.com",
-    "phone": "9969383542",
-    "vpin": "0125",
+    // "phone": "8097324074",
+    // "vpin": "0125",
     "password": "p@ssw0rd"
   };
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    // user.value.email = "karomhatre@gmail.com";
+    user.value = Get.find<AuthService>().user.value;
+    creds["phone"] = user.value.registeredMobile ?? "";
+    // creds["phone"] = "8097324074";
+    // creds["phone"] = "7875002200";
+    version = Get.find<AuthService>().version ?? "0";
   }
 
+  late String? version = "";
   RxBool viaPassword = false.obs;
 
   //StepOne

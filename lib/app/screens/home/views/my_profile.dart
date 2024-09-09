@@ -18,7 +18,7 @@ class MyProfileScreen extends GetView<HomeController> {
     double fem = MediaQuery.of(context).size.width / baseWidth;
     // double ffem = fem * 0.97;
     return Scaffold(
-      backgroundColor: ColorPallete.theme,
+      // backgroundColor: ColorPallete.theme,
       body: SafeArea(
         child: Scaffold(
           backgroundColor: ColorPallete.theme,
@@ -113,6 +113,18 @@ class MyProfileScreen extends GetView<HomeController> {
                                     value: controller.profile.value.membregNo!,
                                     icon: Icons.card_membership,
                                   ),
+                                  EntryWidget(
+                                    title: "Nominee Name",
+                                    value: controller
+                                        .profile.value.nomineeName!.capitalize!,
+                                    icon: Icons.person,
+                                  ),
+                                  EntryWidget(
+                                    title: "Shares Amount",
+                                    value:
+                                        controller.profile.value.sharesAmount!,
+                                    icon: Icons.card_membership,
+                                  ),
                                   SizedBox(
                                     height: 5 * fem,
                                   ),
@@ -184,7 +196,7 @@ class EntryWidget extends StatelessWidget {
     double baseWidth = 360;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10.0 * fem, horizontal: 10 * fem),
+      padding: EdgeInsets.symmetric(vertical: 7.50 * fem, horizontal: 10 * fem),
       child: RoundedContainer(
         radius: 0,
         child: MyListView(

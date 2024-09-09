@@ -100,7 +100,7 @@ class User {
   User.fromJson(Map<String, dynamic> json) {
     membregNo = json['membreg_no'];
     memberName = json['member_name'];
-    registeredMobile = json['RegisteredMobile'];
+    registeredMobile = json['RegisteredMobile'] ?? json["phone"];
     sbaccountId = json['sbaccount_id'];
     accountName = json['Account_name'];
     balance = json['balance'];

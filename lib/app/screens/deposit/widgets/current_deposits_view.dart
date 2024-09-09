@@ -7,6 +7,7 @@ import '../../../components/ui/my_list_view.dart';
 import '../../../components/ui/rounded_container.dart';
 import '../../../components/ui/text_view.dart';
 import '../controllers/deposit_controller.dart';
+import 'acc_card .dart';
 
 class CurrentDepositsView extends GetView<DepositController> {
   const CurrentDepositsView({super.key});
@@ -18,6 +19,53 @@ class CurrentDepositsView extends GetView<DepositController> {
     // double ffem = fem * 0.97;
     return MyListView(
       children: [
+        Obx(
+          () => RoundedContainer(
+            radius: 0,
+            height: 175,
+            color: ColorPallete.theme,
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.0 * fem),
+              child: controller.accounts.isEmpty
+                  ? Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15.0 * fem),
+                      child: RoundedContainer(
+                        radius: 15,
+                        clip: Clip.antiAliasWithSaveLayer,
+                        child: Shimmer.fromColors(
+                          baseColor: Colors.grey.withOpacity(0.2),
+                          highlightColor: Colors.white,
+                          child: RoundedContainer(
+                            radius: 15,
+                            color: ColorPallete.grey,
+                            height: 155 * fem,
+                          ),
+                        ),
+                      ),
+                    )
+                  : PageView(
+                      padEnds: false,
+                      controller: PageController(
+                          initialPage: 0, viewportFraction: 0.925),
+                      onPageChanged: (value) {
+                        controller.selectedAccount.value =
+                            controller.accounts.elementAt(value);
+                        controller.selectedAccount.refresh();
+                      },
+                      children: controller.accounts.map((account) {
+                        return Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 7.5 * fem),
+                          child: AccCard(
+                              memberNo: account.mEMBREGNO,
+                              accHolder: account.accountName,
+                              accountNo: account.accountId,
+                              balance: account.balance),
+                        );
+                      }).toList(),
+                    ),
+            ),
+          ),
+        ),
         SizedBox(
           height: 5 * fem,
         ),
@@ -29,6 +77,7 @@ class CurrentDepositsView extends GetView<DepositController> {
               SizedBox(
                 height: 15 * fem,
               ),
+
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0 * fem),
                 child: const TextView(

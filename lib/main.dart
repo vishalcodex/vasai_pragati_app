@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import '/common/theme.dart';
@@ -23,6 +26,9 @@ Future initServices() async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  if (Platform.isAndroid) {
+    await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+  }
   //ONE SIGNAL
   //Remove this method to stop OneSignal Debugging
   if (kDebugMode) {
@@ -47,8 +53,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sessionConfig = SessionConfig(
-        invalidateSessionForAppLostFocus: const Duration(seconds: 30),
-        invalidateSessionForUserInactivity: const Duration(seconds: 30));
+        invalidateSessionForAppLostFocus: const Duration(minutes: 5),
+        invalidateSessionForUserInactivity: const Duration(minutes: 5));
     sessionConfig.stream.listen((SessionTimeoutState timeoutEvent) {
       if (!kDebugMode) {
         if (timeoutEvent == SessionTimeoutState.userInactivityTimeout) {

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -29,7 +30,23 @@ class AdvertisementScreen extends StatelessWidget {
           padding: EdgeInsets.all(20.0 * fem),
           child: Column(
             children: [
-              Image.asset(ad.image.toString()),
+              RoundedContainer(
+                radius: 10,
+                clip: Clip.antiAliasWithSaveLayer,
+                child: CachedNetworkImage(
+                  imageUrl: ad.image!,
+                  fit: BoxFit.fill,
+                  errorWidget: (context, url, error) {
+                    return Padding(
+                      padding: EdgeInsets.all(10.0 * fem),
+                      child: Image.asset(
+                        "assets/ui/logo.png",
+                        // fit: BoxFit.fill,
+                      ),
+                    );
+                  },
+                ),
+              ),
               SizedBox(
                 height: 20 * fem,
               ),

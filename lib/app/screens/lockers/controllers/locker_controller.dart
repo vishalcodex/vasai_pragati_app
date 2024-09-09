@@ -25,7 +25,9 @@ class LockerController extends GetxController {
   RxList<Locker> lockers = <Locker>[].obs;
 
   fetchLockers() async {
+    isLoading.value = true;
     await _accountsRepository.fetchLockers().then((value) {
+      isLoading.value = false;
       lockers.value = value.data;
       lockers.refresh();
     });
