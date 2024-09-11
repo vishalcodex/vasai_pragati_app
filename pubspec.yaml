@@ -46,7 +46,7 @@ dependencies:
   # PDF
   pdf: ^3.10.7
   open_filex: ^4.3.2
-  permission_handler: 
+  # permission_handler: 
   path_provider: ^2.1.1
   # SESSION
   local_session_timeout: ^2.3.2

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
@@ -70,7 +72,11 @@ class EMICalculatorScreen extends GetView<HomeController> {
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 10.0 * fem),
                                       child: MyTextField(
-                                        keyboardType: TextInputType.number,
+                                        keyboardType: Platform.isAndroid
+                                            ? TextInputType.number
+                                            : const TextInputType
+                                                .numberWithOptions(
+                                                signed: true),
                                         initialValue:
                                             controller.amount.value.toString(),
                                         hintText: "Your Amount",
@@ -118,6 +124,11 @@ class EMICalculatorScreen extends GetView<HomeController> {
                                         initialValue: controller.interest.value
                                             .toString(),
                                         hintText: "Your Interest",
+                                        keyboardType: Platform.isAndroid
+                                            ? TextInputType.number
+                                            : const TextInputType
+                                                .numberWithOptions(
+                                                signed: true),
                                         onSubmit: (value) {
                                           controller.interest.value =
                                               double.parse(value);
@@ -166,6 +177,11 @@ class EMICalculatorScreen extends GetView<HomeController> {
                                               initialValue: controller
                                                   .tenure.value
                                                   .toString(),
+                                              keyboardType: Platform.isAndroid
+                                                  ? TextInputType.number
+                                                  : const TextInputType
+                                                      .numberWithOptions(
+                                                      signed: true),
                                               onSubmit: (value) {
                                                 controller.tenure.value =
                                                     int.parse(value);

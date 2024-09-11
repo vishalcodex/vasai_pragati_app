@@ -294,27 +294,27 @@ class MainScreen extends GetView<HomeController> {
                                           radius: 0,
                                           height: 7.5,
                                           child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children:
-                                                controller.ads.map((element) {
-                                              bool isSelected = element.id ==
-                                                  controller.selectedAd.value;
-                                              return Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 2.5 * fem),
-                                                child: RoundedContainer(
-                                                  color: isSelected
-                                                      ? ColorPallete.primary
-                                                      : ColorPallete.grey
-                                                          .withOpacity(0.5),
-                                                  radius: 5,
-                                                  height: 10,
-                                                  width: isSelected ? 20 : 10,
-                                                ),
-                                              );
-                                            }).toList(),
-                                          ),
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: List.generate(
+                                                  controller.ads.length,
+                                                  (index) {
+                                                bool isSelected = index + 1 ==
+                                                    controller.selectedAd.value;
+                                                return Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 2.5 * fem),
+                                                  child: RoundedContainer(
+                                                    color: isSelected
+                                                        ? ColorPallete.primary
+                                                        : ColorPallete.grey
+                                                            .withOpacity(0.5),
+                                                    radius: 5,
+                                                    height: 10,
+                                                    width: isSelected ? 20 : 10,
+                                                  ),
+                                                );
+                                              })),
                                         ),
                                       SizedBox(
                                         height: 15 * fem,
